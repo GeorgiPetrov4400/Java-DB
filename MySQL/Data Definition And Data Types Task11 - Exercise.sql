@@ -33,7 +33,7 @@ CREATE TABLE `movies` (
     `title` VARCHAR(40) NOT NULL,
     `director_id` INT,
     `copyright_year` INT,
-    `lenght` INT,
+    `length` INT,
     `genre_id` INT,
     `category_id` INT,
     `rating` DOUBLE,
