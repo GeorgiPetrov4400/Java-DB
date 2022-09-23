@@ -70,3 +70,19 @@ INSERT INTO books(author_id,title, year_of_release,cost) VALUES
 	(9,'Fifty Shades Darker','2012-00-00',13.99),	
 	(9,'Fifty Shades Freed','2012-00-00',13.99);
     
+    
+    SELECT `title` FROM `books`
+    WHERE SUBSTRING(`title`, 1, 3) = "The";
+    
+	SELECT REPLACE (`title`, "The", "***") 
+    FROM `books`
+    WHERE SUBSTRING(`title`, 1, 3) = "The";
+    
+    SELECT ROUND(SUM(`cost`), 2)
+    FROM `books`;
+    
+    SELECT EXTRACT();
+
+    SELECT `title` 
+    FROM `books` 
+    WHERE LOCATE("Harry", `title`);
