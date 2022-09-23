@@ -81,7 +81,9 @@ INSERT INTO books(author_id,title, year_of_release,cost) VALUES
     SELECT ROUND(SUM(`cost`), 2)
     FROM `books`;
     
-    SELECT EXTRACT();
+    SELECT CONCAT(`first_name`, ' ', `last_name`) AS `Full Name`, 
+    TIMESTAMPDIFF(DAY, `born`, `died`) AS `Days Lived`
+    FROM `authors`;
 
     SELECT `title` 
     FROM `books` 
