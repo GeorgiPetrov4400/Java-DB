@@ -51,3 +51,34 @@ SELECT `peak_name`, `river_name`, CONCAT(LOWER(`peak_name`), SUBSTRING(LOWER(`ri
 FROM `peaks`, `rivers`
 WHERE RIGHT(`peak_name`, 1) = LEFT(LOWER(`river_name`), 1)
 ORDER BY `mix`;
+
+SELECT `name`, DATE_FORMAT(`start`, '%Y-%m-%d') AS `start` 
+FROM `games`
+WHERE YEAR(`start`) >= 2011 AND YEAR(`start`) <= 2012
+ORDER BY `start`, `name`
+LIMIT 50;
+
+SELECT `user_name`, SUBSTRING(`email`, LOCATE('@', `email`) + 1) AS `email_provider` 
+FROM `users` 
+ORDER BY `email_provider`, `user_name`;
+
+SELECT `user_name`, `ip_address` 
+FROM `users` 
+WHERE `ip_address` LIKE "___.1%.%.___"
+ORDER BY `user_name`;
+
+SELECT `name` AS `game`, 
+CASE
+WHEN HOUR(`start`) < 12 THEN "Morning"
+WHEN HOUR(`start`) < 18 THEN "Afternoon"
+ELSE "Evening"
+END
+AS "Part of day",
+CASE
+WHEN `duration` <= 3 THEN "Extra Short" 
+WHEN `duration` <= 6 THEN "Short" 
+WHEN `duration` <= 10 THEN "Long" 
+ELSE "Extra Long"
+END
+AS "Duration"
+FROM `games`;
