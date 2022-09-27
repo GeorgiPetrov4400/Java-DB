@@ -247,3 +247,31 @@ FROM `wizzard_deposits`
 WHERE DATE(`deposit_start_date`) > '1985-01-01'
 GROUP BY `deposit_group`, `is_deposit_expired`
 ORDER BY `deposit_group` DESC, `is_deposit_expired`;
+
+SELECT `department_id`, MIN(`salary`) FROM `employees` 
+WHERE `department_id` IN(2, 5, 7) AND DATE(`hire_date`) > '2000-01-01' 
+GROUP BY `department_id`
+ORDER BY `department_id`;
+
+CREATE TABLE `salary_more_than` AS SELECT * FROM `employees`
+WHERE `salary` > 30000;
+
+DELETE FROM `salary_more_than`
+WHERE `manager_id` = 42;
+
+UPDATE `salary_more_than`
+SET `salary` = `salary` + 5000
+WHERE `department_id` = 1;
+
+SELECT `department_id`, AVG(`salary`) AS 'avg_salary' FROM `salary_more_than`
+GROUP BY `department_id`
+ORDER BY `department_id`;
+
+SELECT `department_id`, MAX(`salary`) AS 'max_salary' FROM `employees`
+GROUP BY `department_id`
+HAVING `max_salary` NOT BETWEEN 30000 AND 70000
+ORDER BY `department_id`;
+
+SELECT COUNT(*) FROM `employees`
+WHERE `manager_id` IS NULL;
+
