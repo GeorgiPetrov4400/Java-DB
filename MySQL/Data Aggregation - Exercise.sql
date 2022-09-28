@@ -275,3 +275,25 @@ ORDER BY `department_id`;
 SELECT COUNT(*) FROM `employees`
 WHERE `manager_id` IS NULL;
 
+SELECT DISTINCT `department_id`, (
+SELECT DISTINCT `salary` FROM `employees` e
+WHERE e.`department_id` = `employees`.`department_id`
+ORDER BY `salary` DESC
+LIMIT 1 OFFSET 2
+) AS 'third_highest_salary'
+FROM `employees`
+HAVING `third_highest_salary` IS NOT NULL
+ORDER BY `department_id`;
+
+SELECT `first_name`, `last_name`, `department_id` 
+FROM `employees` f
+WHERE `salary` > (
+SELECT AVG(`salary`) FROM `employees` e
+WHERE e.`department_id` = f.`department_id`
+)
+ORDER BY `department_id`, `employee_id`
+LIMIT 10;
+
+SELECT `department_id`, SUM(`salary`) AS `total_salary` FROM `employees`
+GROUP BY `department_id`
+ORDER BY `department_id`;
