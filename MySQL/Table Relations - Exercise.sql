@@ -107,3 +107,55 @@ ADD CONSTRAINT `fk_teacher_manager`
 FOREIGN KEY (`manager_id`) 
 REFERENCES `teachers`(`teacher_id`);
 
+#5 Online Store Database
+CREATE DATABASE `online_store`;
+
+CREATE TABLE `cities` (
+`city_id` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(50)
+);
+
+CREATE TABLE `item_types` (
+`item_type_id` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(50)
+);
+
+CREATE TABLE `customers` (
+`customer_id` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(50),
+`birthday` DATE,
+`city_id` INT,
+CONSTRAINT `fk_cities_customers`
+FOREIGN KEY (`city_id`)
+REFERENCES `cities`(`city_id`)
+);
+
+CREATE TABLE `orders` (
+`order_id` INT PRIMARY KEY AUTO_INCREMENT,
+`customer_id` INT,
+CONSTRAINT `fk_customers_orders`
+FOREIGN KEY (`customer_id`)
+REFERENCES `customers`(`customer_id`)
+);
+
+CREATE TABLE `items` (
+`item_id` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(50),
+`item_type_id` INT,
+CONSTRAINT `fk_items_item_type` 
+FOREIGN KEY (`item_type_id`) 
+REFERENCES `item_types` (`item_type_id`)
+);
+
+CREATE TABLE `order_items` (
+`order_id` INT,
+`item_id` INT,
+CONSTRAINT `pk`
+PRIMARY KEY (`order_id`, `item_id`),
+CONSTRAINT `fk_order_items_orders`
+FOREIGN KEY (`order_id`)
+REFERENCES `orders`(`order_id`),
+CONSTRAINT `fk_order_items_items`
+FOREIGN KEY (`item_id`)
+REFERENCES `items`(`item_id`)
+);
