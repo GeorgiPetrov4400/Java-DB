@@ -1673,3 +1673,11 @@ INSERT INTO `towns` (`town_id`, `name`) VALUES
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
+
+#1 Managers
+SELECT e.`employee_id`, CONCAT(e.`first_name`, ' ', e.`last_name`) AS 'full name', d.`department_id`, d.`name` AS 'department_name'
+FROM `employees` AS e
+JOIN `departments` AS d ON e.`employee_id` = d.`manager_id`
+ORDER BY `employee_id`
+LIMIT 5;
+
