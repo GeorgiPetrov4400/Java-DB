@@ -1693,3 +1693,9 @@ SELECT `employee_id`, `first_name`, `last_name`, `department_id`, `salary`
 FROM `employees`
 WHERE `manager_id` IS NULL;
 
+#4 Higher salary
+SELECT COUNT(`employee_id`) AS 'count'
+FROM `employees`
+WHERE `salary` > (
+SELECT AVG(`salary`) FROM `employees`
+);
