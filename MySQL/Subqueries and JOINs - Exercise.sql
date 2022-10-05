@@ -99,3 +99,12 @@ WHERE `country_code`  = 'BG'
 AND (`mountain_range` = 'Rila' OR `mountain_range` = 'Pirin' OR `mountain_range` = 'Rhodope Mountains' OR `mountain_range` = 'Vitosha' OR `mountain_range` = 'Strandzha') 
 AND `elevation` > 2835
 ORDER BY `elevation` DESC;
+
+#12.1 Highest Peaks in Bulgaria
+SELECT c.`country_code`, m.`mountain_range`, p.`peak_name`, p.`elevation` 
+FROM `mountains_countries` AS c
+JOIN `mountains` AS m ON m.`id` = c.`mountain_id`
+JOIN `peaks` AS p ON m.`id` = p.`mountain_id`
+WHERE c.`country_code` = 'BG' AND p.`elevation` > 2835
+ORDER BY `elevation` DESC;
+
