@@ -108,3 +108,11 @@ JOIN `peaks` AS p ON m.`id` = p.`mountain_id`
 WHERE c.`country_code` = 'BG' AND p.`elevation` > 2835
 ORDER BY `elevation` DESC;
 
+#13 Count Mountain Ranges
+SELECT `country_code`, COUNT(`mountain_range`) AS 'mountain_range'
+FROM `mountains_countries` AS mc
+JOIN `mountains` AS m ON m.`id` = mc.`mountain_id`
+WHERE `country_code` = 'US' OR `country_code` = 'RU' OR `country_code` = 'BG'
+GROUP BY `country_code`
+ORDER BY `mountain_range` DESC;
+
