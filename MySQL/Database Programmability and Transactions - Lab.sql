@@ -19,3 +19,16 @@ BEGIN
 END%%
 
 SELECT ufn_count_employees_by_town('Sofia')%%
+
+#2 Employees Promotion
+CREATE PROCEDURE usp_raise_salaries(department_name VARCHAR(50))
+BEGIN
+	UPDATE `employees`
+	SET `salary` = `salary` * 1.05
+    WHERE `department_id` = (
+    SELECT `department_id` FROM `departments` WHERE `name` = department_name
+		)
+    ORDER BY `first_name`, `salary`;
+END%%
+
+CALL usp_raise_salaries('Finance')%%
