@@ -125,6 +125,21 @@ WHERE c.`continent_code` = 'AF'
 ORDER BY `country_name`
 LIMIT 5;
 
+#15 Continents and Currencies
+SELECT `continent_code`, `currency_code`, COUNT(`currency_code`) AS 'currency_usage' 
+FROM `countries` AS c
+GROUP BY `continent_code`, `currency_code`
+HAVING `currency_usage` = (
+	SELECT COUNT(`currency_code`) AS 'count'
+    FROM `countries` c2
+    WHERE c.`continent_code` = c2.`continent_code`
+    GROUP BY c2.`currency_code`
+    ORDER BY `count` DESC
+    LIMIT 1
+) 
+AND `currency_usage` > 1
+ORDER BY `continent_code`, `currency_code`;
+
 #16 Countries Without Any Mountains
 SELECT COUNT(c.`country_code`) AS 'country_count'
 FROM `countries` AS c
