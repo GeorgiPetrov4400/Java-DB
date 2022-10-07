@@ -16,3 +16,11 @@ BEGIN
     ORDER BY `first_name`, `last_name`, `employee_id`;
 END%%
 
+#3 Town Names Starting With
+CREATE PROCEDURE usp_get_towns_starting_with (enter_string VARCHAR(50))
+BEGIN
+	SELECT `name` FROM `towns`
+    WHERE `name` LIKE CONCAT(enter_string, '%')
+    ORDER BY `name`;
+END%%
+
