@@ -83,3 +83,14 @@ BEGIN
     ORDER BY a.`account_holder_id`;
 END%%
 
+#10 Future Value Function
+CREATE FUNCTION ufn_calculate_future_value (initial_sum DECIMAL(19, 4), yearly_interest_rate DOUBLE, years INT)
+RETURNS DECIMAL(19, 4)
+DETERMINISTIC
+BEGIN
+	DECLARE future_value_sum DECIMAL(19, 4);
+    
+    SET future_value_sum := initial_sum * POW((1 + yearly_interest_rate), years);
+    RETURN future_value_sum;
+END%%
+
