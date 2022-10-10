@@ -73,3 +73,13 @@ BEGIN
     ORDER BY `full_name`;
 END%%
 
+#9 People with Balance Higher Than
+CREATE PROCEDURE usp_get_holders_with_balance_higher_than (supplied_number DECIMAL(19, 4))
+BEGIN 
+	SELECT ah.`first_name`, ah.`last_name` FROM `account_holders` AS ah
+    JOIN `accounts` AS a ON ah.`id` = a.`account_holder_id`
+    GROUP BY ah.`id`
+    HAVING SUM(a.`balance`) > supplied_number
+    ORDER BY a.`account_holder_id`;
+END%%
+
