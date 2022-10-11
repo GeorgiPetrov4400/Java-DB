@@ -94,3 +94,7 @@ WHERE `id` BETWEEN 15 AND 25;
 #4 Delete
 DELETE c, m FROM `countries` AS c LEFT JOIN `movies` AS m ON c.`id` = m.`country_id` WHERE m.`country_id` IS NULL;
 
+#5 Countries
+SELECT `id`, `name`, `continent`, `currency` FROM `countries`
+ORDER BY `currency` DESC, `id`;
+
