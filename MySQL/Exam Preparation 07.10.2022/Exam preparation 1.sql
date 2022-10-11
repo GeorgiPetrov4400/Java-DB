@@ -635,3 +635,9 @@ WHERE `age` >= 45;
 #5 Players
 SELECT `first_name`, `age`, `salary` FROM `players`
 ORDER BY `salary` DESC;
+
+#6 Young offense players without contract
+SELECT p.`id`, CONCAT(p.`first_name`, ' ', p.`last_name`) AS 'full_name', p.`age`, p.`position`, p.`hire_date` FROM `players` AS p
+JOIN `skills_data` AS s ON p.`skills_data_id` = s.`id` 
+WHERE `age` < 23 AND `position` = 'A' AND `hire_date` IS NULL AND s.`strength` > 50
+ORDER BY p.`salary`, p.`age`;
