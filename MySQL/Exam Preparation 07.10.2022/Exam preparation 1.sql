@@ -1,5 +1,6 @@
 -- CREATE DATABASE `fsd`;
 
+#1 Table design
 CREATE TABLE `countries` (
 `id` INT PRIMARY KEY AUTO_INCREMENT, 
 `name` VARCHAR(45) NOT NULL
@@ -615,3 +616,10 @@ insert into players_coaches(player_id , coach_id) VALUE (4, 6);
 insert into players_coaches(player_id , coach_id) VALUE (39, 10);
 insert into players_coaches(player_id , coach_id) VALUE (71, 8);
 
+#2 Insert
+INSERT INTO `coaches` (`first_name`, `last_name`, `salary`, `coach_level`) 
+(SELECT p.`first_name`, p.`last_name`, p.`salary` * 2 AS `salary`, CHAR_LENGTH(p.`first_name`) 
+ FROM `players` AS p
+ WHERE `age` >= 45);
+ 
+ 
