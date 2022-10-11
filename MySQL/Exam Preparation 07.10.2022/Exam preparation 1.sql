@@ -641,3 +641,9 @@ SELECT p.`id`, CONCAT(p.`first_name`, ' ', p.`last_name`) AS 'full_name', p.`age
 JOIN `skills_data` AS s ON p.`skills_data_id` = s.`id` 
 WHERE `age` < 23 AND `position` = 'A' AND `hire_date` IS NULL AND s.`strength` > 50
 ORDER BY p.`salary`, p.`age`;
+
+#7 Detail info for all teams
+SELECT t.`name` AS 'team_name', t.`established`, t.`fan_base`, COUNT(p.`id`) AS 'players_count' FROM `teams` AS t
+LEFT JOIN `players` AS p ON p.`team_id` = t.`id`
+GROUP BY t.`id`
+ORDER BY `players_count` DESC, t.`fan_base` DESC;
