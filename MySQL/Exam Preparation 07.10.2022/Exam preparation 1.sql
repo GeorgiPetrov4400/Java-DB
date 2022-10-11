@@ -666,3 +666,19 @@ LEFT JOIN `teams` AS tm ON s.`id` = tm.`stadium_id`
 LEFT JOIN `players` AS p ON tm.`id` = p.`team_id`
 GROUP BY c.`id`
 ORDER BY `total_count_of_players` DESC, c.`name`;
+
+#10 Find all players that play on stadium
+DELIMITER %%
+CREATE FUNCTION udf_stadium_players_count (stadium_name VARCHAR(30))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+
+ RETURN(SELECT COUNT(p.`id`) AS 'count' FROM `stadiums` AS s
+	LEFT JOIN `teams` AS t ON s.`id` = t.`stadium_id`
+	LEFT JOIN `players` AS p ON t.`id` = p.`team_id`
+	WHERE s.`name` = stadium_name
+	GROUP BY s.`id`);
+    
+END%%
+
