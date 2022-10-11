@@ -113,3 +113,9 @@ SELECT CONCAT(a.`first_name`, ' ', a.`last_name`) AS 'full_name', CONCAT(REVERSE
     GROUP BY a.`id`
     ORDER BY a.`height`;
     
+#8 International festival
+SELECT c.`name`, COUNT(m.`country_id`) AS 'movies_count' FROM `countries` AS c
+JOIN `movies` AS m ON c.`id` = m.`country_id`
+GROUP BY c.`name`
+HAVING movies_count >= 7
+ORDER BY c.`name` DESC;
