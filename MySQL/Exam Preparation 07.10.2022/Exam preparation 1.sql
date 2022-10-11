@@ -1,4 +1,5 @@
--- CREATE DATABASE `fsd`;
+CREATE DATABASE `fsd`;
+USE `fsd`;
 
 #1 Table design
 CREATE TABLE `countries` (
@@ -627,6 +628,10 @@ UPDATE `coaches` AS c
 SET c.`coach_level` = c.`coach_level` + 1
 WHERE c.`id` IN (SELECT `coach_id` FROM `players_coaches`) AND c.`first_name` LIKE 'A%';
 
-#Delete
+#4 Delete
 DELETE FROM `players` 
 WHERE `age` >= 45;
+
+#5 Players
+SELECT `first_name`, `age`, `salary` FROM `players`
+ORDER BY `salary` DESC;
