@@ -98,3 +98,10 @@ DELETE c, m FROM `countries` AS c LEFT JOIN `movies` AS m ON c.`id` = m.`country
 SELECT `id`, `name`, `continent`, `currency` FROM `countries`
 ORDER BY `currency` DESC, `id`;
 
+#6 Old movies
+SELECT m.`id`, m.`title`, ai.`runtime`, ai.`budget`, ai.`release_date` FROM `movies` AS m 
+JOIN `movies_additional_info` ai ON m.`movie_info_id` = ai.`id`
+WHERE YEAR(ai.`release_date`) BETWEEN 1996 AND 1999
+ORDER BY ai.`runtime`, m.`id`
+LIMIT 20;
+
