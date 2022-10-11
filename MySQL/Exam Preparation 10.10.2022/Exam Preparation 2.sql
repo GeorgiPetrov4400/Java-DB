@@ -87,3 +87,7 @@ INSERT INTO `actors` (`first_name`, `last_name`, `birthdate`, `height`, `awards`
         FROM `actors` AS a
         WHERE a.`id` <= 10);
         
+#3 Update
+UPDATE `movies_additional_info` SET `runtime` = `runtime` - 10 
+WHERE `id` BETWEEN 15 AND 25;
+
