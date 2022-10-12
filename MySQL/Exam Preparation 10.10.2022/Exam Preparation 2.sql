@@ -127,7 +127,7 @@ SELECT
         WHEN ai.`rating` <= 4 THEN 'poor'
         WHEN ai.`rating` <= 7 THEN 'good'
         ELSE 'excellent'
-    END) AS 'rating',
+     END) AS 'rating',
     IF(ai.`has_subtitles`, 'english', '-') AS 'subtitles',
     ai.`budget`
 FROM
@@ -135,3 +135,18 @@ FROM
         JOIN
     `movies_additional_info` AS ai ON ai.`id` = m.`movie_info_id`
 ORDER BY ai.`budget` DESC;
+
+#10 History movies
+DELIMITER %%
+CREATE FUNCTION udf_actor_history_movies_count (full_name VARCHAR(50)) 
+RETURNS INT 
+DETERMINISTIC
+BEGIN
+	RETURN (SELECT COUNT(m.`id`) AS 'history_movies' FROM `movies` AS m
+	JOIN `movies_actors` AS ma ON m.`id` = ma.`movie_id`
+	JOIN `actors` AS a ON ma.`actor_id` = a.`id`
+	JOIN `genres_movies` AS gm ON m.`id` = gm.`movie_id`
+	JOIN `genres` AS g ON gm.`genre_id` = g.`id`
+	WHERE g.`name` = 'History' AND CONCAT(a.`first_name`, ' ', a.`last_name`) = full_name
+	GROUP BY a.`id`);
+END%%
