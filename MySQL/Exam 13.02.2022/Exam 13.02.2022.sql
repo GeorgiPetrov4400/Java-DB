@@ -109,3 +109,10 @@ SELECT CONCAT(c.`first_name`, ' ', c.`last_name`) AS 'full_name', c.`address`, o
 JOIN `orders` AS o ON c.`id` = o.`customer_id`
 WHERE YEAR(o.`order_datetime`) <= 2018
 ORDER BY `full_name` DESC;
+
+#9 Best categories
+SELECT COUNT(p.`category_id`) AS 'items_count', c.`name`, SUM(p.`quantity_in_stock`) AS 'total_quantity' FROM `categories` AS c 
+JOIN `products` AS p ON c.`id` = p.`category_id`
+GROUP BY p.`category_id`
+ORDER BY `items_count` DESC, `total_quantity`
+LIMIT 5;
