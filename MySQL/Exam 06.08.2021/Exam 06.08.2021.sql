@@ -761,3 +761,12 @@ INSERT INTO `games` (`name`, `rating`, `budget`, `team_id`)
 			(SELECT REVERSE(LOWER(SUBSTRING(t.`name`, 2))), t.`id`, (t.`leader_id` * 1000), t.`id` FROM `teams` AS t
              WHERE t.`id` BETWEEN 1 AND 9);
              
+#3 Update
+UPDATE `employees` SET `salary` = `salary` + 1000 
+WHERE `age` < 40 AND `salary` <= 5000;
+
+#4 Delete
+DELETE g, c FROM `games` AS g
+LEFT JOIN `games_categories` AS gc ON g.`id` = gc.`game_id`
+LEFT JOIN `categories` AS c ON gc.`category_id` = c.`id`
+WHERE c.`id` IS NULL AND `release_date` IS NULL;
