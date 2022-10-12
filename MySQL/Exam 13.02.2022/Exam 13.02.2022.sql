@@ -89,3 +89,12 @@ WHERE `quantity_in_stock` BETWEEN 60 AND 70;
 DELETE c, o FROM `customers` AS c
 LEFT JOIN `orders` AS o ON c.`id` = o.`customer_id`
 WHERE o.`id` IS NULL;
+
+#5 Categories
+SELECT `id`, `name` FROM `categories` 
+ORDER BY `name` DESC;
+
+#6 Quantity
+SELECT `id`, `brand_id`, `name`, `quantity_in_stock` FROM `products`
+WHERE `price` > 1000 AND `quantity_in_stock` < 30
+ORDER BY `quantity_in_stock`, `id`;
