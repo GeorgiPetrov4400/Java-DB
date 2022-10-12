@@ -770,3 +770,7 @@ DELETE g, c FROM `games` AS g
 LEFT JOIN `games_categories` AS gc ON g.`id` = gc.`game_id`
 LEFT JOIN `categories` AS c ON gc.`category_id` = c.`id`
 WHERE c.`id` IS NULL AND `release_date` IS NULL;
+
+#5 Employees
+SELECT `first_name`, `last_name`, `age`, `salary`, `happiness_level` FROM `employees`
+ORDER BY `salary`, `id`;
