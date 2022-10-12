@@ -774,3 +774,10 @@ WHERE c.`id` IS NULL AND `release_date` IS NULL;
 #5 Employees
 SELECT `first_name`, `last_name`, `age`, `salary`, `happiness_level` FROM `employees`
 ORDER BY `salary`, `id`;
+
+#6 Addresses of the teams
+SELECT t.`name` AS 'team_name', a.`name` AS 'address_name', LENGTH(a.`name`) AS 'count_of_characters' FROM `teams` AS t 
+JOIN `offices` AS o ON t.`office_id` = o.`id`
+JOIN `addresses` AS a ON o.`address_id` = a.`id`
+WHERE o.`website` IS NOT NULL
+ORDER BY `team_name`, `address_name`;
