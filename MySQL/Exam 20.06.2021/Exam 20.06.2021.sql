@@ -1,5 +1,6 @@
 CREATE DATABASE `stc`;
 
+#1 Table design
 CREATE TABLE `addresses` (
 `id` INT PRIMARY KEY AUTO_INCREMENT,
 `name` VARCHAR(100) NOT NULL
@@ -67,3 +68,16 @@ FOREIGN KEY (`driver_id`)
 REFERENCES `drivers`(`id`)
 );
 
+#2 Insert
+INSERT INTO `clients` (`full_name`, `phone_number`) 
+	(SELECT CONCAT(d.`first_name`, ' ', d.`last_name`), CONCAT('(088) 9999', d.`id` * 2) FROM `drivers` AS d
+	 WHERE d.`id` BETWEEN 10 AND 20);
+     
+#3 Update
+UPDATE `cars` SET `condition` = 'C' 
+WHERE (`mileage` >= 800000 OR `mileage` IS NULL) AND `year` <= 2010 AND `make` != 'Mercedes-Benz';
+
+#4 Delete
+DELETE cl FROM `clients` AS cl
+LEFT JOIN `courses` AS c ON cl.`id` = c.`client_id`
+WHERE c.`id` IS NULL;
