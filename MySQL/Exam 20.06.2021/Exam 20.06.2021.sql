@@ -131,3 +131,21 @@ BEGIN
 			JOIN `courses` AS cs ON cl.`id` = cs.`client_id`
 			WHERE cl.`phone_number` = phone_num);
 END %%
+
+#11 Full info for address
+CREATE PROCEDURE udp_courses_by_address (address_name VARCHAR(100))
+BEGIN 
+	SELECT a.`name`, cl.`full_name`, 
+	(CASE 
+		WHEN cs.`bill` <= 20 THEN 'Low'
+		WHEN cs.`bill` <= 30 THEN 'Medium'
+		ELSE 'High'
+	END) AS 'level_of_bill', 
+	c.`make`, c.`condition`, cg.`name` AS 'cat_name' FROM `addresses` AS a 
+	JOIN `courses` AS cs ON a.`id` = cs.`from_address_id`
+	JOIN `clients` AS cl ON cs.`client_id` = cl.`id`
+	JOIN `cars` AS c ON cs.`car_id` = c.`id`
+	JOIN `categories` AS cg ON c.`category_id` = cg.`id`
+	WHERE a.`name` = address_name
+	ORDER BY c.`make`, cl.`full_name`;
+END %%
