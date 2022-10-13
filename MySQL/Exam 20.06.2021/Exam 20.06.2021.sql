@@ -107,3 +107,16 @@ JOIN `courses` AS cs ON cl.`id` = cs.`client_id`
 GROUP BY cl.`full_name`
 HAVING SUBSTRING(cl.`full_name`, 2) LIKE 'a%' AND `count_of_cars` > 1
 ORDER BY cl.`full_name`;
+
+#9 Full info for courses
+SELECT a.`name`, 
+(CASE 
+	WHEN HOUR(cs.`start`) BETWEEN 6 AND 20 THEN 'Day'
+    ELSE 'Night'
+ END) AS 'day_time', 
+cs.`bill`, cl.`full_name`, c.`make`, c.`model`, cg.`name` FROM `addresses` AS a 
+JOIN `courses` AS cs ON a.`id` = cs.`from_address_id`
+JOIN `clients` AS cl ON cs.`client_id` = cl.`id`
+JOIN `cars` AS c ON cs.`car_id` = c.`id`
+JOIN `categories` AS cg ON c.`category_id` = cg.`id`
+ORDER BY cs.`id`;
