@@ -81,3 +81,17 @@ CONSTRAINT `fk_employees_employees`
 FOREIGN KEY (`manager_id`)
 REFERENCES `employees`(`id`)
 );
+
+#2 Insert
+INSERT INTO `products_stores` (`product_id`, `store_id`) 
+	(SELECT p.`id`, 1 FROM `products` AS p
+	LEFT JOIN `products_stores` AS ps ON p.`id` = ps.`product_id`
+	WHERE ps.`store_id` IS NULL);
+    
+#3 Update 
+UPDATE `employees` SET `manager_id` = 3, `salary` = `salary` - 500
+WHERE YEAR(`hire_date`) > 2003 AND `store_id` != 5 AND `store_id` != 14;
+
+#4 Delete
+DELETE e FROM `employees` AS e 
+WHERE `salary` > 6000 AND `manager_id` IS NOT NULL;
