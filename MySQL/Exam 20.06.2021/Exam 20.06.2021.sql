@@ -120,3 +120,14 @@ JOIN `clients` AS cl ON cs.`client_id` = cl.`id`
 JOIN `cars` AS c ON cs.`car_id` = c.`id`
 JOIN `categories` AS cg ON c.`category_id` = cg.`id`
 ORDER BY cs.`id`;
+
+#10 Find all courses by client’s phone number
+DELIMITER %%
+CREATE FUNCTION udf_courses_by_client (phone_num VARCHAR (20)) 
+RETURNS INT
+DETERMINISTIC
+BEGIN
+	RETURN (SELECT COUNT(cs.`id`) FROM `clients` AS cl
+			JOIN `courses` AS cs ON cl.`id` = cs.`client_id`
+			WHERE cl.`phone_number` = phone_num);
+END %%
