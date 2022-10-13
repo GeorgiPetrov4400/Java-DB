@@ -1,4 +1,5 @@
 CREATE DATABASE `stc`;
+USE `stc`;
 
 #1 Table design
 CREATE TABLE `addresses` (
@@ -81,3 +82,14 @@ WHERE (`mileage` >= 800000 OR `mileage` IS NULL) AND `year` <= 2010 AND `make` !
 DELETE cl FROM `clients` AS cl
 LEFT JOIN `courses` AS c ON cl.`id` = c.`client_id`
 WHERE c.`id` IS NULL;
+
+#5 Cars
+SELECT `make`, `model`, `condition` FROM `cars`
+ORDER BY `id`;
+
+#6 Drivers and Cars
+SELECT d.`first_name`, d.`last_name`, c.`make`, c.`model`, c.`mileage` FROM `drivers` AS d
+JOIN `cars_drivers` AS cd ON d.`id` = cd.`driver_id`
+JOIN `cars` AS c ON cd.`car_id` = c.`id`
+WHERE `mileage` IS NOT NULL
+ORDER BY `mileage` DESC, `first_name`;
