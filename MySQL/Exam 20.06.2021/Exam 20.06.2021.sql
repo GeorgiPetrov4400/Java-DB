@@ -100,3 +100,10 @@ LEFT JOIN `courses` AS cs ON c.`id` = cs.`car_id`
 GROUP BY c.`id`
 HAVING `count_of_courses` != 2
 ORDER BY `count_of_courses` DESC, c.`id`;
+
+#8 Regular clients
+SELECT cl.`full_name`, COUNT(cs.`car_id`) AS 'count_of_cars', SUM(cs.`bill`) AS 'total_sum' FROM `clients` AS cl
+JOIN `courses` AS cs ON cl.`id` = cs.`client_id`
+GROUP BY cl.`full_name`
+HAVING SUBSTRING(cl.`full_name`, 2) LIKE 'a%' AND `count_of_cars` > 1
+ORDER BY cl.`full_name`;
