@@ -1,5 +1,6 @@
 CREATE DATABASE `instd`;
 
+#1 Table design
 CREATE TABLE `users` (
 `id` INT PRIMARY KEY,
 `username` VARCHAR(30) NOT NULL UNIQUE,
@@ -61,3 +62,22 @@ CONSTRAINT `fk_likes_users`
 FOREIGN KEY (`user_id`)
 REFERENCES `users`(`id`)
 );
+
+
+#2 Insert
+INSERT INTO `addresses` (`address`, `town`, `country`, `user_id`) 
+	(SELECT u.`username`, u.`password`, u.`ip`, u.`age` FROM `users` AS u
+	 WHERE u.`gender` = 'M');
+     
+#3 Update
+UPDATE `addresses` AS a 
+SET a.`country` = (CASE
+        WHEN a.`country` LIKE 'B%' THEN 'Blocked'
+        WHEN a.`country` LIKE 'T%' THEN 'Test'
+        WHEN a.`country` LIKE 'P%' THEN 'In Progress'
+				   END)
+WHERE `country` LIKE 'B%' OR `country` LIKE 'T%' OR `country` LIKE 'P%';
+
+#4 Delete
+DELETE a FROM `addresses` AS a
+WHERE a.`id` % 3 = 0;
