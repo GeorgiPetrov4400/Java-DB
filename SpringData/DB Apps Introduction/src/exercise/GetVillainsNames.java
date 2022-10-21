@@ -8,10 +8,6 @@ public class GetVillainsNames {
     public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
-      //  System.out.print("Enter password default (empty):");
-//        String password = scanner.nextLine().trim();
-//        System.out.println();
-
         Properties properties = new Properties();
         properties.setProperty("user", "root");
         properties.setProperty("password", "12345");
