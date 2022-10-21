@@ -1,4 +1,4 @@
-package com.company;
+package DBAppsIntroductionLab;
 
 import java.sql.*;
 import java.util.Properties;
