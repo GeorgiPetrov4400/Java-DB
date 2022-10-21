@@ -1,30 +1,34 @@
 package DBAppsIntroductionExercise;
 
-import java.sql.*;
-import java.util.Properties;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class GetVillainsNames {
+    private static final String GET_VILLAIN_NAMES =
+            "SELECT v.`name`, COUNT(DISTINCT mv.`minion_id`) AS 'count_minions'" +
+                    " FROM `villains` AS v" +
+                    " JOIN `minions_villains` AS mv ON v.`id` = mv.`villain_id`" +
+                    " GROUP BY v.`id`" +
+                    " HAVING `count_minions` > 15" +
+                    " ORDER BY `count_minions` DESC";
+
     public static void main(String[] args) throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
-        Properties properties = new Properties();
-        properties.setProperty("user", "root");
-        properties.setProperty("password", "12345");
+        Connection connection = Utils.getSQLConnection();
 
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/minions_db", properties);
-
-        PreparedStatement statement = connection.prepareStatement
-                ("SELECT v.`name`, COUNT(DISTINCT mv.`minion_id`) AS 'count_minions' FROM `villains` AS v" +
-                        " JOIN `minions_villains` AS mv ON v.`id` = mv.`villain_id`" +
-                        " GROUP BY v.`id`" +
-                        " HAVING `count_minions` > 15" +
-                        " ORDER BY `count_minions` DESC");
+        PreparedStatement statement = connection.prepareStatement(GET_VILLAIN_NAMES);
 
         ResultSet result = statement.executeQuery();
 
         while (result.next()) {
-            System.out.println(result.getString("v.name") + " " + result.getInt("count_minions"));
+            String villainName = result.getString("v.name");
+            int minionsCount = result.getInt("count_minions");
+
+            System.out.println(villainName + " " + minionsCount);
         }
 
         connection.close();
