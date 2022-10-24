@@ -38,8 +38,8 @@ public class GetMinionNames {
         } else {
             String villainName = villainResult.getString("v.name");
             System.out.println("Villain: " + villainName);
-            int minionCount = 1;
 
+            int minionCount = 1;
             while (minionResult.next()) {
                 String minionName = minionResult.getString("m.name");
                 int minionAge = minionResult.getInt("m.age");
