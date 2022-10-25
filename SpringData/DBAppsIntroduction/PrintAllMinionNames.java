@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Scanner;
 
 public class PrintAllMinionNames {
 
@@ -13,7 +12,6 @@ public class PrintAllMinionNames {
             "SELECT name FROM minions ORDER BY id DESC LIMIT 25";
 
     public static void main(String[] args) throws SQLException {
-        Scanner scanner = new Scanner(System.in);
 
         Connection connection = Utils.getSQLConnection();
 
