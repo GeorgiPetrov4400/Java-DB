@@ -40,5 +40,7 @@ public class IncreaseMinionsAge {
 
             System.out.println(minionName + " " + minionAge);
         }
+
+        connection.close();
     }
 }
