@@ -76,6 +76,22 @@ public class EntityManager<E> implements DBContext<E> {
         return this.createEntity(entityType, resultSet);
     }
 
+//    private boolean doUpdate(E entity, Field idColumn) throws SQLException, IllegalAccessException {
+//        final String tableName = getTableName(entity.getClass());
+//
+//        final List<KeyValuePair> keyValuePairs = getKeyValuePairs(entity);
+//
+//        final String updateValues = keyValuePairs.stream()
+//                .map(keyValuePair -> String.format(UPDATE_VALUE_FORMAT, keyValuePair.key, keyValuePair.value))
+//                .collect(Collectors.joining(","));
+//
+//        final int idValue = Integer.parseInt(idColumn.get(entity).toString());
+//
+//        final String insertQuery = String.format(UPDATE_QUERY_BY_ID_FORMAT, tableName, updateValues, idValue);
+//
+//        return connection.prepareStatement(insertQuery).execute();
+//    }
+
     private String getTableName(Class<?> clazz) {
         Entity annotation = clazz.getAnnotation(Entity.class);
 
