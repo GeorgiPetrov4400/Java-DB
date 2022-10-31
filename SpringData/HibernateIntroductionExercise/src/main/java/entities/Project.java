@@ -3,6 +3,7 @@ package entities;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Entity
@@ -35,7 +36,7 @@ public class Project {
         this.name = name;
     }
 
-    @Column(name = "description",columnDefinition = "TEXT")
+    @Column(name = "description", columnDefinition = "TEXT")
     public String getDescription() {
         return description;
     }
@@ -69,5 +70,15 @@ public class Project {
 
     public void setEmployees(Set<Employee> employees) {
         this.employees = employees;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Project name: %s\n" +
+                        " \tProject Description: %s\n" +
+                        " \tProject Start Date:%s\n" +
+                        " \tProject End Date: %s\n", this.getName(), this.getDescription(),
+                this.getStartDate().minusHours(3).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S")),
+                this.getEndDate() == null ? "null" : this.getEndDate().toString());
     }
 }
