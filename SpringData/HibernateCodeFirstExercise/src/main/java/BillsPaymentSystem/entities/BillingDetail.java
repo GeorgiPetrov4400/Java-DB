@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "billing_details")
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class BillingDetail {
 
     @Id
