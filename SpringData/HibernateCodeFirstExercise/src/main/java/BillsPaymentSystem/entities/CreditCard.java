@@ -6,10 +6,6 @@ import jakarta.persistence.*;
 @Table(name = "credit_cards")
 public class CreditCard extends BillingDetail {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @Column(name = "card_type", nullable = false)
     private String cardType;
 
@@ -28,15 +24,6 @@ public class CreditCard extends BillingDetail {
         this.cardType = cardType;
         this.expirationMonth = expirationMonth;
         this.expirationYear = expirationYear;
-    }
-
-    @Override
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getCardType() {

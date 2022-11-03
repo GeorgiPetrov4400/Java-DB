@@ -6,14 +6,10 @@ import jakarta.persistence.*;
 @Table(name = "bank_accounts")
 public class BankAccount extends BillingDetail {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-    @Column(name = "bank_name", nullable = false, unique = true)
+    @Column(name = "bank_name")
     private String bankName;
 
-    @Column(name = "swift_code", nullable = false, unique = true)
+    @Column(name = "swift_code")
     private String swiftCode;
 
     public BankAccount() {
@@ -24,15 +20,6 @@ public class BankAccount extends BillingDetail {
         this();
         this.bankName = bankName;
         this.swiftCode = swiftCode;
-    }
-
-    @Override
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getBankName() {

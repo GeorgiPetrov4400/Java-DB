@@ -16,7 +16,7 @@ public abstract class BillingDetail {
     @Column(nullable = false)
     private int number;
 
-    @Column(nullable = false)
+    @Column
     private String owner;
 
     @ManyToMany(mappedBy = "billingDetails")
