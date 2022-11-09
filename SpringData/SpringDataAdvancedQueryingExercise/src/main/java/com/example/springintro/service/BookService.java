@@ -27,4 +27,11 @@ public interface BookService {
 
     List<Book> findBooksByReleaseDateBefore(LocalDate localDate);
 
+    List<Book> findByTitleContaining(String string);
+
+    List<Book> findByAuthorLastNameStartWith(String startWith);
+
+    List<Book> findAllByTitleGreaterThanCount(int length);
+
+    List<Book> findBooksByTitleContaining(String string);
 }

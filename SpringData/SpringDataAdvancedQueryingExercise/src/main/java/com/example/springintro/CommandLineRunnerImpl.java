@@ -1,6 +1,7 @@
 package com.example.springintro;
 
 import com.example.springintro.model.entity.AgeRestriction;
+import com.example.springintro.model.entity.Author;
 import com.example.springintro.model.entity.Book;
 import com.example.springintro.model.entity.EditionType;
 import com.example.springintro.service.AuthorService;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -37,7 +39,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 //        printAllAuthorsAndNumberOfTheirBooks();
 //        printALlBooksByAuthorNameOrderByReleaseDate("George", "Powell");
 
-        // SPRING DATA ADVANCED QUERIYNG HOMEWORK
+        // SPRING DATA ADVANCED QUERYING HOMEWORK
 
         Scanner scanner = new Scanner(System.in);
 
@@ -62,7 +64,72 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
 
 
         //6. Authors Search  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        // AuthorsSearch_06(scanner);
 
+
+        //7. Books Search  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        // BooksSearch_07(scanner);
+
+
+        //8. Book Titles Search  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        // BookTitlesSearch_08(scanner);
+
+
+        //9. Count Books  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        // CountBooks_09(scanner);
+
+
+        //10. Total Book Copies  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        // TotalBookCopies_10();
+
+
+        //11. Reduced Book  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        // ReducedBook_11(scanner);
+
+    }
+
+    private void ReducedBook_11(Scanner scanner) {
+        String input = scanner.nextLine();
+
+        this.bookService.findBooksByTitleContaining(input)
+                .forEach(book -> System.out.printf("%s %s %s %.2f%n",
+                        book.getTitle(), book.getEditionType(), book.getAgeRestriction(), book.getPrice()));
+    }
+
+    private void TotalBookCopies_10() {
+        this.authorService.findTotalCopiesByAuthor()
+                .forEach(author ->
+                        System.out.println(author.getFirstName() + " " + author.getLastName() + " " + author.getAllCopies()));
+    }
+
+    private void CountBooks_09(Scanner scanner) {
+        int length = Integer.parseInt(scanner.nextLine());
+
+        List<Book> allBooksByTitle = this.bookService.findAllByTitleGreaterThanCount(length);
+
+        System.out.println(allBooksByTitle.size());
+    }
+
+    private void BookTitlesSearch_08(Scanner scanner) {
+        String startWith = scanner.nextLine();
+
+        this.bookService.findByAuthorLastNameStartWith(startWith)
+                .forEach(book ->
+                        System.out.printf("%s (%s %s)%n", book.getTitle(), book.getAuthor().getFirstName(), book.getAuthor().getLastName()));
+    }
+
+    private void BooksSearch_07(Scanner scanner) {
+        String input = scanner.nextLine();
+
+        this.bookService.findByTitleContaining(input)
+                .forEach(book -> System.out.println(book.getTitle()));
+    }
+
+    private void AuthorsSearch_06(Scanner scanner) {
+        String input = scanner.nextLine();
+
+        this.authorService.findByFirstNameEndingWith(input).
+                forEach(author -> System.out.println(author.getFirstName() + " " + author.getLastName()));
     }
 
     private void BooksReleasedBeforeDate_05(Scanner scanner) {

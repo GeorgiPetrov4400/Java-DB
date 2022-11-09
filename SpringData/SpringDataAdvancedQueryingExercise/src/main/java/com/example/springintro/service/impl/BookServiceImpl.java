@@ -129,5 +129,24 @@ public class BookServiceImpl implements BookService {
         return this.bookRepository.findBooksByReleaseDateBefore(localDate);
     }
 
+    @Override
+    public List<Book> findByTitleContaining(String string) {
+        return this.bookRepository.findByTitleContaining(string);
+    }
+
+    @Override
+    public List<Book> findByAuthorLastNameStartWith(String startWith) {
+        return this.bookRepository.findBooksByAuthorLastNameStartingWith(startWith);
+    }
+
+    @Override
+    public List<Book> findAllByTitleGreaterThanCount(int length) {
+        return this.bookRepository.findAllByTitleGreaterThanCount(length);
+    }
+
+    @Override
+    public List<Book> findBooksByTitleContaining(String string) {
+        return this.bookRepository.findBooksByTitleContaining(string);
+    }
 
 }
