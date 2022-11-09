@@ -149,4 +149,31 @@ public class BookServiceImpl implements BookService {
         return this.bookRepository.findBooksByTitleContaining(string);
     }
 
+    @Override
+    public int addCopiesToBook(String date, int increaseCopies) {
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        LocalDate after = LocalDate.parse(date, timeFormatter);
+
+        return this.bookRepository.addCopiesToBook(after, increaseCopies);
+    }
+
+    @Override
+    public int deleteBooksByCopiesLessThan(int copies) {
+        return this.bookRepository.deleteBooksByCopiesLessThan(copies);
+    }
+
+//    @Override
+//    public int countBooksByAuthorStoredProcedure(String firstName, String lastName) {
+//        return this.bookRepository.countBooksByAuthorStoredProcedure(firstName, lastName);
+//    }
+
+    @Override
+    public Integer countBooksByAuthorNameStoredProcedure(String name) {
+        String[] nameInput = name.split(" ");
+        String firstName = nameInput[0];
+        String lastName = nameInput[1];
+
+        return bookRepository.countBooksByAuthorStoredProcedure(firstName, lastName);
+    }
+
 }

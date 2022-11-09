@@ -86,6 +86,43 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         //11. Reduced Book  // Разкоментирай следващия ред и натисни run за да стартира задачата
         // ReducedBook_11(scanner);
 
+
+        //12. Increase Book Copies  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        // IncreaseBookCopies_12(scanner);
+
+
+        //13. Remove Books  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        // RemoveBooks_13(scanner);
+
+
+        //14. Stored Procedure  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        String nameInput = scanner.nextLine();
+
+//        String[] name = nameInput.split("\\s+");
+//
+//        String firstName = name[0];
+//        String lastName = name[1];
+//
+//        int i = this.bookService.countBooksByAuthorStoredProcedure(firstName, lastName);
+
+        int countBooksByAuthor = this.bookService.countBooksByAuthorNameStoredProcedure(nameInput);
+
+        System.out.printf("%s has written %d books", nameInput, countBooksByAuthor);
+    }
+
+    private void RemoveBooks_13(Scanner scanner) {
+        int deleteCopiesLessThan = Integer.parseInt(scanner.nextLine());
+
+        int deletedBooksCount = this.bookService.deleteBooksByCopiesLessThan(deleteCopiesLessThan);
+        System.out.println(deletedBooksCount + " books deleted");
+    }
+
+    private void IncreaseBookCopies_12(Scanner scanner) {
+        String date = scanner.nextLine();
+        int increaseCopies = Integer.parseInt(scanner.nextLine());
+
+        int updatedBooks = this.bookService.addCopiesToBook(date, increaseCopies);
+        System.out.println(increaseCopies * updatedBooks);
     }
 
     private void ReducedBook_11(Scanner scanner) {

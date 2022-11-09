@@ -34,4 +34,12 @@ public interface BookService {
     List<Book> findAllByTitleGreaterThanCount(int length);
 
     List<Book> findBooksByTitleContaining(String string);
+
+    int addCopiesToBook(String date, int increaseCopies);
+
+    int deleteBooksByCopiesLessThan(int copies);
+
+    Integer countBooksByAuthorNameStoredProcedure(String name);
+
+   // int countBooksByAuthorStoredProcedure(String firstName, String lastName);
 }
