@@ -162,11 +162,6 @@ public class BookServiceImpl implements BookService {
         return this.bookRepository.deleteBooksByCopiesLessThan(copies);
     }
 
-//    @Override
-//    public int countBooksByAuthorStoredProcedure(String firstName, String lastName) {
-//        return this.bookRepository.countBooksByAuthorStoredProcedure(firstName, lastName);
-//    }
-
     @Override
     public Integer countBooksByAuthorNameStoredProcedure(String name) {
         String[] nameInput = name.split(" ");

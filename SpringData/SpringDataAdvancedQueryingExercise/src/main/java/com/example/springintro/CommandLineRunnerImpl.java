@@ -1,7 +1,6 @@
 package com.example.springintro;
 
 import com.example.springintro.model.entity.AgeRestriction;
-import com.example.springintro.model.entity.Author;
 import com.example.springintro.model.entity.Book;
 import com.example.springintro.model.entity.EditionType;
 import com.example.springintro.service.AuthorService;
@@ -11,9 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
 
@@ -44,80 +41,67 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         Scanner scanner = new Scanner(System.in);
 
         //1. Book Titles by Age Restriction  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // BookTitlesByAgeRestriction_01(scanner);
+        // bookTitlesByAgeRestriction_01(scanner);
 
 
         //2. Golden Books  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // GoldenBooks_02(scanner);
+        // goldenBooks_02(scanner);
 
 
         //3. Books by Price  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // BookByPrice_03();
+        // bookByPrice_03();
 
 
         //4. Not Released Books  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // NotReleasedBooks_04(scanner);
+        // notReleasedBooks_04(scanner);
 
 
         //5. Books Released Before Date  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // BooksReleasedBeforeDate_05(scanner);
+        // booksReleasedBeforeDate_05(scanner);
 
 
         //6. Authors Search  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // AuthorsSearch_06(scanner);
+        // authorsSearch_06(scanner);
 
 
         //7. Books Search  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // BooksSearch_07(scanner);
+        // booksSearch_07(scanner);
 
 
         //8. Book Titles Search  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // BookTitlesSearch_08(scanner);
+        // bookTitlesSearch_08(scanner);
 
 
         //9. Count Books  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // CountBooks_09(scanner);
+        // countBooks_09(scanner);
 
 
         //10. Total Book Copies  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // TotalBookCopies_10();
+        // totalBookCopies_10();
 
 
         //11. Reduced Book  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // ReducedBook_11(scanner);
+        // reducedBook_11(scanner);
 
 
         //12. Increase Book Copies  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // IncreaseBookCopies_12(scanner);
+        // increaseBookCopies_12(scanner);
 
 
         //13. Remove Books  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        // RemoveBooks_13(scanner);
+        // removeBooks_13(scanner);
 
 
-        //14. Stored Procedure  // Разкоментирай следващия ред и натисни run за да стартира задачата
-        String nameInput = scanner.nextLine();
-
-//        String[] name = nameInput.split("\\s+");
-//
-//        String firstName = name[0];
-//        String lastName = name[1];
-//
-//        int i = this.bookService.countBooksByAuthorStoredProcedure(firstName, lastName);
-
-        int countBooksByAuthor = this.bookService.countBooksByAuthorNameStoredProcedure(nameInput);
-
-        System.out.printf("%s has written %d books", nameInput, countBooksByAuthor);
     }
 
-    private void RemoveBooks_13(Scanner scanner) {
+    private void removeBooks_13(Scanner scanner) {
         int deleteCopiesLessThan = Integer.parseInt(scanner.nextLine());
 
         int deletedBooksCount = this.bookService.deleteBooksByCopiesLessThan(deleteCopiesLessThan);
         System.out.println(deletedBooksCount + " books deleted");
     }
 
-    private void IncreaseBookCopies_12(Scanner scanner) {
+    private void increaseBookCopies_12(Scanner scanner) {
         String date = scanner.nextLine();
         int increaseCopies = Integer.parseInt(scanner.nextLine());
 
@@ -125,7 +109,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         System.out.println(increaseCopies * updatedBooks);
     }
 
-    private void ReducedBook_11(Scanner scanner) {
+    private void reducedBook_11(Scanner scanner) {
         String input = scanner.nextLine();
 
         this.bookService.findBooksByTitleContaining(input)
@@ -133,13 +117,13 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                         book.getTitle(), book.getEditionType(), book.getAgeRestriction(), book.getPrice()));
     }
 
-    private void TotalBookCopies_10() {
+    private void totalBookCopies_10() {
         this.authorService.findTotalCopiesByAuthor()
                 .forEach(author ->
                         System.out.println(author.getFirstName() + " " + author.getLastName() + " " + author.getAllCopies()));
     }
 
-    private void CountBooks_09(Scanner scanner) {
+    private void countBooks_09(Scanner scanner) {
         int length = Integer.parseInt(scanner.nextLine());
 
         List<Book> allBooksByTitle = this.bookService.findAllByTitleGreaterThanCount(length);
@@ -147,7 +131,7 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         System.out.println(allBooksByTitle.size());
     }
 
-    private void BookTitlesSearch_08(Scanner scanner) {
+    private void bookTitlesSearch_08(Scanner scanner) {
         String startWith = scanner.nextLine();
 
         this.bookService.findByAuthorLastNameStartWith(startWith)
@@ -155,21 +139,21 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                         System.out.printf("%s (%s %s)%n", book.getTitle(), book.getAuthor().getFirstName(), book.getAuthor().getLastName()));
     }
 
-    private void BooksSearch_07(Scanner scanner) {
+    private void booksSearch_07(Scanner scanner) {
         String input = scanner.nextLine();
 
         this.bookService.findByTitleContaining(input)
                 .forEach(book -> System.out.println(book.getTitle()));
     }
 
-    private void AuthorsSearch_06(Scanner scanner) {
+    private void authorsSearch_06(Scanner scanner) {
         String input = scanner.nextLine();
 
         this.authorService.findByFirstNameEndingWith(input).
                 forEach(author -> System.out.println(author.getFirstName() + " " + author.getLastName()));
     }
 
-    private void BooksReleasedBeforeDate_05(Scanner scanner) {
+    private void booksReleasedBeforeDate_05(Scanner scanner) {
         String[] dateInput = scanner.nextLine().split("-");
 
         int day = Integer.parseInt(dateInput[0]);
@@ -182,14 +166,14 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                 .forEach(book -> System.out.printf("%s %s %.2f%n", book.getTitle(), book.getEditionType(), book.getPrice()));
     }
 
-    private void NotReleasedBooks_04(Scanner scanner) {
+    private void notReleasedBooks_04(Scanner scanner) {
         int year = Integer.parseInt(scanner.nextLine());
 
         this.bookService.findByReleaseDateBeforeOrReleaseDateAfter(year)
                 .forEach(book -> System.out.println(book.getTitle()));
     }
 
-    private void BookByPrice_03() {
+    private void bookByPrice_03() {
         float priceLowerThan = 5;
         float priceHigherThan = 40;
 
@@ -197,14 +181,14 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
                 .forEach(book -> System.out.printf("%s - $%.2f%n", book.getTitle(), book.getPrice()));
     }
 
-    private void GoldenBooks_02(Scanner scanner) {
+    private void goldenBooks_02(Scanner scanner) {
         int inputCopies = Integer.parseInt(scanner.nextLine());
 
         this.bookService.findBooksByEditionTypeAndCopiesLessThan(EditionType.GOLD, inputCopies)
                 .forEach(book -> System.out.println(book.getTitle()));
     }
 
-    private void BookTitlesByAgeRestriction_01(Scanner scanner) {
+    private void bookTitlesByAgeRestriction_01(Scanner scanner) {
         String ageRestrictionInput = scanner.nextLine();
 
         AgeRestriction ageRestriction = AgeRestriction.valueOf(ageRestrictionInput.toUpperCase());

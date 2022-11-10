@@ -40,6 +40,4 @@ public interface BookService {
     int deleteBooksByCopiesLessThan(int copies);
 
     Integer countBooksByAuthorNameStoredProcedure(String name);
-
-   // int countBooksByAuthorStoredProcedure(String firstName, String lastName);
 }
