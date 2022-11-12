@@ -92,6 +92,14 @@ public class CommandLineRunnerImpl implements CommandLineRunner {
         // removeBooks_13(scanner);
 
 
+        //14. Stored Procedure  // Разкоментирай следващия ред и натисни run за да стартира задачата
+        String nameInput = scanner.nextLine();
+
+        String[] name = nameInput.split("\\s+");
+
+        int countBooksByAuthor = this.bookService.countBooksByAuthorNameStoredProcedure(nameInput);
+
+        System.out.printf("%s has written %d books%n", nameInput, countBooksByAuthor);
     }
 
     private void removeBooks_13(Scanner scanner) {
