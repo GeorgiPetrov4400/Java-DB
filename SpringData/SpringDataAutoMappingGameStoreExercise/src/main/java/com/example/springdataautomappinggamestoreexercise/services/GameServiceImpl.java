@@ -58,12 +58,13 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public void deleteGame(Long id) {
-        Optional<Game> gameById = gameRepository.findById(id);
-        if (gameById.isEmpty()) {
-            System.out.println("Cannot delete non existing game");
-            return;
-        }
+        Game game = gameRepository.findById(id).orElse(null);
 
-        gameRepository.deleteById(id);
+        if (game == null) {
+            System.out.println("Cannot delete non existing game");
+        } else {
+            System.out.println("Delete " + game.getTitle());
+            gameRepository.deleteById(id);
+        }
     }
 }
