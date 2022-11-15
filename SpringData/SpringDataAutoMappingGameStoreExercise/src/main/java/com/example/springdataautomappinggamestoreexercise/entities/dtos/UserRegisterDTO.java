@@ -6,10 +6,10 @@ import javax.validation.constraints.Size;
 
 public class UserRegisterDTO {
 
-    @Email(message = "Enter valid email")
+    @Email(message = "Incorrect email")
     private String email;
 
-    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,})", message = "Enter valid password")
+    @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,})", message = "Incorrect password")
     private String password;
 
     private String confirmPassword;

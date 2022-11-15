@@ -1,5 +1,6 @@
 package com.example.springdataautomappinggamestoreexercise;
 
+import com.example.springdataautomappinggamestoreexercise.entities.dtos.UserLoginDTO;
 import com.example.springdataautomappinggamestoreexercise.entities.dtos.UserRegisterDTO;
 import com.example.springdataautomappinggamestoreexercise.services.UserService;
 import org.springframework.boot.CommandLineRunner;
@@ -32,8 +33,10 @@ public class ConsoleRunner implements CommandLineRunner {
                     userService.registerUser(new UserRegisterDTO(input[1], input[2], input[3], input[4]));
                     break;
                 case "LoginUser":
+                    userService.loginUser(new UserLoginDTO(input[1], input[2]));
                     break;
                 case "Logout":
+                    userService.logout();
                     break;
             }
         }
