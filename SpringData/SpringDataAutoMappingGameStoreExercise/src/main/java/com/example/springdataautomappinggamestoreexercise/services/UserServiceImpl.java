@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = modelMapper.map(userRegisterDTO, User.class);
+
+        if (userRepository.count() == 0) {
+            user.setAdmin(true);
+        }
+
         userRepository.save(user);
         System.out.println(user.getFullName() + " was registered");
     }
@@ -73,4 +78,5 @@ public class UserServiceImpl implements UserService {
             loggedInUser = null;
         }
     }
+
 }

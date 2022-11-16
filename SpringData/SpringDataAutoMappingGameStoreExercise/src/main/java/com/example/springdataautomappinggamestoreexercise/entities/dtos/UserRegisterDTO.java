@@ -1,5 +1,6 @@
 package com.example.springdataautomappinggamestoreexercise.entities.dtos;
 
+import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -17,6 +18,9 @@ public class UserRegisterDTO {
     @Size(min = 2)
     private String fullName;
 
+    @Column(name = "is_admin")
+    private boolean isAdmin;
+
     public UserRegisterDTO() {
     }
 
@@ -25,6 +29,7 @@ public class UserRegisterDTO {
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.fullName = fullName;
+        this.isAdmin = false;
     }
 
     public String getEmail() {
@@ -57,5 +62,13 @@ public class UserRegisterDTO {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
