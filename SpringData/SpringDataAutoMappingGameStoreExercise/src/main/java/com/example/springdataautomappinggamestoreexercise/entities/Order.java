@@ -1,9 +1,7 @@
 package com.example.springdataautomappinggamestoreexercise.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,10 +11,17 @@ public class Order extends BaseEntity {
     @ManyToOne
     private User buyer;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Game> games;
 
     public Order() {
+        this.games = new HashSet<>();
+    }
+
+    public Order(User buyer, Set<Game> games) {
+        this();
+        this.buyer = buyer;
+        this.games = games;
     }
 
     public User getBuyer() {

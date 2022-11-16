@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 @Service
@@ -87,4 +88,26 @@ public class GameServiceImpl implements GameService {
             System.out.println("Only login Admin user can delete game");
         }
     }
+
+    @Override
+    public void getAllGames() {
+        this.gameRepository.findAll()
+                .forEach(game -> System.out.println(game.getTitle() + " " + game.getPrice()));
+    }
+
+    @Override
+    public void findGameByTitle(String title) {
+        Game gameByTitle = this.gameRepository.findGameByTitle(title);
+
+        if (gameByTitle == null) {
+            System.out.println("Game does not exist in database");
+            return;
+        }
+
+        System.out.printf("Title: %s%nPrice: %.2f%nDescription: %s%nRelease date: %s%n",
+                gameByTitle.getTitle(), gameByTitle.getPrice(), gameByTitle.getDescription(),
+                gameByTitle.getReleaseDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+    }
+
 }
+

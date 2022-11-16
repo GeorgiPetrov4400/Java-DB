@@ -10,4 +10,9 @@ public interface GameService {
     void editGame(Long gameId, BigDecimal price, Double size);
 
     void deleteGame(Long id);
+
+    void getAllGames();
+
+    void findGameByTitle(String title);
+
 }

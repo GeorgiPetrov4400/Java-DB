@@ -2,6 +2,7 @@ package com.example.springdataautomappinggamestoreexercise.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -21,11 +22,22 @@ public class User extends BaseEntity {
     @Column(name = "is_admin", nullable = false)
     private boolean isAdmin;
 
-    @ManyToMany
+    @OneToMany
+    private Set<Order> orders;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Game> games;
 
 
     public User() {
+        this.orders = new HashSet<>();
+        this.games = new HashSet<>();
+    }
+
+    public User(String email, String password, String fullName) {
+        this();
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
     }
 
     public String getEmail() {

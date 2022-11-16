@@ -1,5 +1,6 @@
 package com.example.springdataautomappinggamestoreexercise.services;
 
+import com.example.springdataautomappinggamestoreexercise.entities.Game;
 import com.example.springdataautomappinggamestoreexercise.entities.User;
 import com.example.springdataautomappinggamestoreexercise.entities.dtos.UserLoginDTO;
 import com.example.springdataautomappinggamestoreexercise.entities.dtos.UserRegisterDTO;
@@ -8,9 +9,13 @@ import com.example.springdataautomappinggamestoreexercise.utils.ValidationUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
+import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -81,7 +86,30 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getLoggedInUser() {
+        if (loggedInUser == null) {
+            try {
+                throw new IOException("User not logged in");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return this.loggedInUser;
+    }
+
+//    @Override
+//    @Transactional
+//    public List<String> ownedGames() {
+//        User user = getLoggedInUser();
+//
+//        List<String> gameList = this.loggedInUser.getGames().stream().map(Game::getTitle).toList();
+//        return this.loggedInUser.getGames().stream().map(Game::getTitle).collect(Collectors.toList());
+//    }
+
+    @Override
+    @Transactional
+    public void getOwnedGames() {
+        this.loggedInUser.getGames().stream().map(Game::getTitle).collect(Collectors.toList())
+                .forEach(System.out::println);
     }
 
 }

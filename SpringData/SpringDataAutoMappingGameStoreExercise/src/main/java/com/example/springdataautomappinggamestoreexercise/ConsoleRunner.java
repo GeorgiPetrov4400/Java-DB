@@ -66,6 +66,18 @@ public class ConsoleRunner implements CommandLineRunner {
                 case "DeleteGame":
                     gameService.deleteGame(Long.parseLong(input[1]));
                     break;
+
+                case "AllGames":
+                    gameService.getAllGames();
+                    break;
+
+                case "DetailGame":
+                    gameService.findGameByTitle(input[1]);
+                    break;
+
+                case "OwnedGames":
+                    userService.getOwnedGames();
+                    break;
             }
         }
     }
