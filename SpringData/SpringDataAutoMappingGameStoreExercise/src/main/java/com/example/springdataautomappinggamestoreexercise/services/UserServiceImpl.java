@@ -79,4 +79,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public User getLoggedInUser() {
+        return this.loggedInUser;
+    }
+
 }

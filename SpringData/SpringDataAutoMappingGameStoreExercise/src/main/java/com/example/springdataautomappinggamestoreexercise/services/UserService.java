@@ -13,4 +13,5 @@ public interface UserService {
 
     void logout();
 
+    User getLoggedInUser();
 }

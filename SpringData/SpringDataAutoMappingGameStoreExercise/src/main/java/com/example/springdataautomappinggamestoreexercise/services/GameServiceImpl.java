@@ -1,6 +1,7 @@
 package com.example.springdataautomappinggamestoreexercise.services;
 
 import com.example.springdataautomappinggamestoreexercise.entities.Game;
+import com.example.springdataautomappinggamestoreexercise.entities.User;
 import com.example.springdataautomappinggamestoreexercise.entities.dtos.GameAddDTO;
 import com.example.springdataautomappinggamestoreexercise.repositories.GameRepository;
 import com.example.springdataautomappinggamestoreexercise.utils.ValidationUtil;
@@ -17,53 +18,73 @@ public class GameServiceImpl implements GameService {
     private final GameRepository gameRepository;
     private final ModelMapper modelMapper;
     private final ValidationUtil validationUtil;
+    private final UserService userService;
 
-    public GameServiceImpl(GameRepository gameRepository, ModelMapper modelMapper, ValidationUtil validationUtil) {
+    public GameServiceImpl(GameRepository gameRepository, ModelMapper modelMapper, ValidationUtil validationUtil, UserService userService) {
         this.gameRepository = gameRepository;
         this.modelMapper = modelMapper;
         this.validationUtil = validationUtil;
+        this.userService = userService;
     }
 
 
     @Override
     public void addGame(GameAddDTO gameAddDTO) {
+        User loggedInUser = this.userService.getLoggedInUser();
 
-        Set<ConstraintViolation<GameAddDTO>> violations = validationUtil.violation(gameAddDTO);
-        if (!violations.isEmpty()) {
-            violations.stream().map(ConstraintViolation::getMessage).forEach(System.out::println);
-            return;
+        if (loggedInUser != null && loggedInUser.isAdmin()) {
+            Set<ConstraintViolation<GameAddDTO>> violations = validationUtil.violation(gameAddDTO);
+            if (!violations.isEmpty()) {
+                violations.stream().map(ConstraintViolation::getMessage).forEach(System.out::println);
+                return;
+            }
+
+            Game game = modelMapper.map(gameAddDTO, Game.class);
+            gameRepository.save(game);
+            System.out.println("Successfully added " + game.getTitle());
+        } else {
+            System.out.println("Only login Admin user can add game");
         }
 
-        Game game = modelMapper.map(gameAddDTO, Game.class);
-        gameRepository.save(game);
-        System.out.println("Successfully added " + game.getTitle());
     }
 
     @Override
     public void editGame(Long gameId, BigDecimal price, Double size) {
-        Game game = gameRepository.findById(gameId).orElse(null);
+        User loggedInUser = this.userService.getLoggedInUser();
 
-        if (game == null) {
-            System.out.println("Invalid game id");
-            return;
+        if (loggedInUser != null && loggedInUser.isAdmin()) {
+            Game game = gameRepository.findById(gameId).orElse(null);
+
+            if (game == null) {
+                System.out.println("Invalid game id");
+                return;
+            }
+
+            game.setPrice(price);
+            game.setSize(size);
+
+            gameRepository.save(game);
+            System.out.println("Successfully edited " + game.getTitle());
+        } else {
+            System.out.println("Only login Admin user can edit game");
         }
-
-        game.setPrice(price);
-        game.setSize(size);
-
-        gameRepository.save(game);
-        System.out.println("Successfully edited " + game.getTitle());
     }
 
     @Override
     public void deleteGame(Long id) {
-        Game game = gameRepository.findById(id).orElse(null);
+        User loggedInUser = this.userService.getLoggedInUser();
 
-        if (game == null) {
-            System.out.println("Cannot delete non existing game");
+        if (loggedInUser != null && loggedInUser.isAdmin()) {
+            Game game = gameRepository.findById(id).orElse(null);
+
+            if (game == null) {
+                System.out.println("Cannot delete non existing game");
+            } else {
+                System.out.println("Delete " + game.getTitle());
+                gameRepository.deleteById(id);
+            }
         } else {
-            System.out.println("Delete " + game.getTitle());
-            gameRepository.deleteById(id);
+            System.out.println("Only login Admin user can delete game");
         }
     }
 }

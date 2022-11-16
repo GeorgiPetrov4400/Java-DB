@@ -11,6 +11,8 @@ public class UserLoginDTO {
     @Pattern(regexp = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,})", message = "Incorrect username / password")
     private String password;
 
+    private boolean isAdmin;
+
     public UserLoginDTO() {
     }
 
@@ -33,5 +35,13 @@ public class UserLoginDTO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 }
