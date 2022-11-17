@@ -109,5 +109,10 @@ public class GameServiceImpl implements GameService {
                 gameByTitle.getReleaseDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
     }
 
+    @Override
+    public Game findGameById(Long id) {
+        return findGameById(id);
+    }
+
 }
 

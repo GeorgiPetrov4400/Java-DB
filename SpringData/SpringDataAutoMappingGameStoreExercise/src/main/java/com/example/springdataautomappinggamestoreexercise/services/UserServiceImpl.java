@@ -4,6 +4,7 @@ import com.example.springdataautomappinggamestoreexercise.entities.Game;
 import com.example.springdataautomappinggamestoreexercise.entities.User;
 import com.example.springdataautomappinggamestoreexercise.entities.dtos.UserLoginDTO;
 import com.example.springdataautomappinggamestoreexercise.entities.dtos.UserRegisterDTO;
+import com.example.springdataautomappinggamestoreexercise.repositories.GameRepository;
 import com.example.springdataautomappinggamestoreexercise.repositories.UserRepository;
 import com.example.springdataautomappinggamestoreexercise.utils.ValidationUtil;
 import org.modelmapper.ModelMapper;
@@ -12,8 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import javax.validation.ConstraintViolation;
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -24,11 +24,13 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final ValidationUtil validationUtil;
     private User loggedInUser;
+    private final GameRepository gameRepository;
 
-    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ValidationUtil validationUtil) {
+    public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ValidationUtil validationUtil, GameRepository gameRepository) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.validationUtil = validationUtil;
+        this.gameRepository = gameRepository;
     }
 
     @Override
@@ -96,20 +98,25 @@ public class UserServiceImpl implements UserService {
         return this.loggedInUser;
     }
 
-//    @Override
-//    @Transactional
-//    public List<String> ownedGames() {
-//        User user = getLoggedInUser();
-//
-//        List<String> gameList = this.loggedInUser.getGames().stream().map(Game::getTitle).toList();
-//        return this.loggedInUser.getGames().stream().map(Game::getTitle).collect(Collectors.toList());
-//    }
-
     @Override
     @Transactional
     public void getOwnedGames() {
-        this.loggedInUser.getGames().stream().map(Game::getTitle).collect(Collectors.toList())
-                .forEach(System.out::println);
+        if (loggedInUser != null && !loggedInUser.isAdmin()) {
+            Game firstGame = this.gameRepository.findGameById(1L);
+            Game secondGame = this.gameRepository.findGameById(3L);
+
+            Set<Game> purchasedGames = new HashSet<>();
+
+            purchasedGames.add(firstGame);
+            purchasedGames.add(secondGame);
+
+            loggedInUser.setGames(purchasedGames);
+
+            this.loggedInUser.getGames().stream().map(Game::getTitle).collect(Collectors.toList())
+                    .forEach(System.out::println);
+        } else {
+            System.out.println("Login user first");
+        }
     }
 
 }
