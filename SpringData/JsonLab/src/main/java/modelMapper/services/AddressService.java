@@ -1,8 +1,8 @@
 package modelMapper.services;
 
-import modelMapper.entities.Address;
-import modelMapper.entities.dtos.AddressDTO;
+import modelMapper.entities.dtos.addresses.AddressDTO;
+import modelMapper.entities.dtos.addresses.CreateAddressDTO;
 
 public interface AddressService {
-    Address create(AddressDTO data);
+    AddressDTO create(CreateAddressDTO data);
 }

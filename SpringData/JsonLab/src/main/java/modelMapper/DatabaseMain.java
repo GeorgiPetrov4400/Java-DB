@@ -1,8 +1,9 @@
 package modelMapper;
 
-import modelMapper.entities.Address;
+import com.google.gson.Gson;
 import modelMapper.entities.Employee;
-import modelMapper.entities.dtos.AddressDTO;
+import modelMapper.entities.dtos.addresses.AddressDTO;
+import modelMapper.entities.dtos.addresses.CreateAddressDTO;
 import modelMapper.entities.dtos.CreateEmployeeDTO;
 import modelMapper.services.AddressService;
 import modelMapper.services.EmployeeService;
@@ -14,33 +15,34 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-// @Component
+@Component
 public class DatabaseMain implements CommandLineRunner {
 
     private final AddressService addressService;
     private final EmployeeService employeeService;
-
     private final Scanner scanner;
+    private final Gson gson;
 
     @Autowired
-    public DatabaseMain(AddressService addressService, EmployeeService employeeService, Scanner scanner) {
+    public DatabaseMain(AddressService addressService, EmployeeService employeeService, Scanner scanner, Gson gson) {
         this.addressService = addressService;
         this.employeeService = employeeService;
         this.scanner = scanner;
+        this.gson = gson;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
-        // createAddress(scanner);
+        createAddress();
 
-        // createEmployee(scanner);
+        // createEmployee();
 
         // printAllEmployees();
 
         // printEmployeeNames();
 
-        printEmployeeNameAndSalary();
+        //  printEmployeeNameAndSalary();
     }
 
     private void printEmployeeNameAndSalary() {
@@ -66,7 +68,7 @@ public class DatabaseMain implements CommandLineRunner {
         String country = scanner.nextLine();
         String city = scanner.nextLine();
 
-        AddressDTO address = new AddressDTO(country, city);
+        CreateAddressDTO address = new CreateAddressDTO(country, city);
 
         CreateEmployeeDTO employeeDTO = new CreateEmployeeDTO(firstName, null, salary, birthday, address);
 
@@ -76,13 +78,12 @@ public class DatabaseMain implements CommandLineRunner {
     }
 
     private void createAddress() {
-        String country = scanner.nextLine();
-        String city = scanner.nextLine();
+        String input = this.scanner.nextLine();
 
-        AddressDTO data = new AddressDTO(country, city);
+        CreateAddressDTO data = this.gson.fromJson(input, CreateAddressDTO.class);
 
-        Address address = addressService.create(data);
+        AddressDTO created = addressService.create(data);
 
-        System.out.println(address);
+        System.out.println(this.gson.toJson(created));
     }
 }
