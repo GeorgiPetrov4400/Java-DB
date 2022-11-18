@@ -78,6 +78,9 @@ public class ConsoleRunner implements CommandLineRunner {
                 case "OwnedGames":
                     userService.getOwnedGames();
                     break;
+
+                case "Close":
+                    return;
             }
         }
     }
