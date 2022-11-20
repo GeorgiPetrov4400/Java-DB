@@ -2,16 +2,16 @@ package com.example.json.productShop.entities.dtos;
 
 import java.math.BigDecimal;
 
-public class ProductInputDTO {
+public class ProductBasicInfo {
 
     private String name;
 
     private BigDecimal price;
 
-    public ProductInputDTO() {
+    public ProductBasicInfo() {
     }
 
-    public ProductInputDTO(String name, BigDecimal price) {
+    public ProductBasicInfo(String name, BigDecimal price) {
         this.name = name;
         this.price = price;
     }
