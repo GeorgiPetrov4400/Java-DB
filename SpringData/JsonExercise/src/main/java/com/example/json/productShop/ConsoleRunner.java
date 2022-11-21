@@ -1,13 +1,10 @@
 package com.example.json.productShop;
 
-import com.example.json.productShop.entities.User;
 import com.example.json.productShop.entities.dtos.CategoryStatistics;
-import com.example.json.productShop.entities.dtos.ProductWithoutBuyerDTO;
-import com.example.json.productShop.entities.dtos.UserWithProductsWrapperDTO;
-import com.example.json.productShop.entities.dtos.UserWithSoldProductsDTO;
 import com.example.json.productShop.services.ProductService;
 import com.example.json.productShop.services.SeedService;
 import com.example.json.productShop.services.UserService;
+import com.example.json.productShop.utils.JsonOutput;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +12,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Scanner;
 
 @Component
 public class ConsoleRunner implements CommandLineRunner {
@@ -43,57 +41,46 @@ public class ConsoleRunner implements CommandLineRunner {
         // this.seedService.seedCategories();
         // this.seedService.seedProducts();
 
-        // Query 1 – Products in Range
-        // productsInRange_01();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter query number from homework: ");
 
-        // Query 2 – Successfully Sold Products
-        // successfullySoldProducts_02();
+        String command = scanner.nextLine();
 
-        // Query 3 – Categories by Products Count
-        // categoriesByProductsCount_03();
+        switch (command) {
+            case "1":
+                productsInRange_01();
+                break;
+            case "2":
+                successfullySoldProducts_02();
+                break;
+            case "3":
+                categoriesByProductsCount_03();
+                break;
+            case "4":
+                usersAndProducts_04();
+                break;
+            default:
+                System.out.println("Exit");
+                break;
+        }
+    }
 
-        // Query 4 – Users and Products
-        UserWithProductsWrapperDTO users = this.userService.getUserWithSoldProductsOrderByCount();
-      //  UserWithProductsWrapperDTO user = this.userService.usersAndProducts();
-
-        String toJson = gson.toJson(users);
-        System.out.println(toJson);
+    private void usersAndProducts_04() throws IOException {
+        this.userService.getUserWithSoldProductsOrderByCount();
     }
 
     private void categoriesByProductsCount_03() throws IOException {
         List<CategoryStatistics> categoryStatistics = this.productService.getCategoryStatistics();
 
-        FileWriter fileWriter =
-                new FileWriter("src/main/resources/productShopJsons/output/categories-by-products.json");
-
-        gson.toJson(categoryStatistics, fileWriter);
-
-        fileWriter.flush();
-        fileWriter.close();
+        JsonOutput.writeJsonToFile(categoryStatistics,
+                Path.of("src/main/resources/productShopJsons/output/categories-by-products.json"));
     }
 
     private void successfullySoldProducts_02() throws IOException {
-        List<UserWithSoldProductsDTO> userWithSoldProducts = this.userService.getUserWithSoldProducts();
-
-        FileWriter fileWriter =
-                new FileWriter("src/main/resources/productShopJsons/output/users-sold-products.json");
-
-        gson.toJson(userWithSoldProducts, fileWriter);
-
-        fileWriter.flush();
-        fileWriter.close();
+        this.userService.getUserWithSoldProducts();
     }
 
     private void productsInRange_01() throws IOException {
-        List<ProductWithoutBuyerDTO> productsInPriceRange =
-                this.productService.getProductsInPriceRange(BigDecimal.valueOf(800), BigDecimal.valueOf(1200));
-
-        FileWriter fileWriter =
-                new FileWriter("src/main/resources/productShopJsons/output/products-in-range.json");
-
-        gson.toJson(productsInPriceRange, fileWriter);
-
-        fileWriter.flush();
-        fileWriter.close();
+        this.productService.getProductsInPriceRange(BigDecimal.valueOf(800), BigDecimal.valueOf(1200));
     }
 }

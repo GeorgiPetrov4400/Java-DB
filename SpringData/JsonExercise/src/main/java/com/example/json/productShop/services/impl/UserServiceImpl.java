@@ -7,10 +7,13 @@ import com.example.json.productShop.entities.dtos.UserWithProductsWrapperDTO;
 import com.example.json.productShop.entities.dtos.UserWithSoldProductsDTO;
 import com.example.json.productShop.repositories.UserRepository;
 import com.example.json.productShop.services.UserService;
+import com.example.json.productShop.utils.JsonOutput;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,37 +30,33 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<UserWithSoldProductsDTO> getUserWithSoldProducts() {
+    public List<UserWithSoldProductsDTO> getUserWithSoldProducts() throws IOException {
         List<User> allUsersWithSoldProducts = this.userRepository.findAllBySellingProductsGreaterThanEqual();
 
-        return allUsersWithSoldProducts.stream()
+        List<UserWithSoldProductsDTO> userWithSoldProductsDTOList = allUsersWithSoldProducts.stream()
                 .map(user -> this.modelMapper.map(user, UserWithSoldProductsDTO.class))
                 .collect(Collectors.toList());
+
+        JsonOutput.writeJsonToFile(userWithSoldProductsDTOList,
+                Path.of("src/main/resources/productShopJsons/output/users-sold-products.json"));
+
+        return userWithSoldProductsDTOList;
     }
 
     @Override
-    public UserWithProductsWrapperDTO getUserWithSoldProductsOrderByCount() {
+    public UserWithProductsWrapperDTO getUserWithSoldProductsOrderByCount() throws IOException {
 
         List<UserWithProductsDTO> userWithProductsDTOList =
                 this.userRepository.findAllWithSoldProductsOrderByCount()
-                .stream().map(user -> this.modelMapper.map(user, UserDTO.class))
-                .map(UserDTO::toUserWithProductsDTO).collect(Collectors.toList());
+                        .stream().map(user -> this.modelMapper.map(user, UserDTO.class))
+                        .map(UserDTO::toUserWithProductsDTO).collect(Collectors.toList());
 
-        return new UserWithProductsWrapperDTO(userWithProductsDTOList);
+        UserWithProductsWrapperDTO userWithProductsWrapperDTO =
+                new UserWithProductsWrapperDTO(userWithProductsDTOList);
+
+        JsonOutput.writeToJson(userWithProductsWrapperDTO,
+                Path.of("src/main/resources/productShopJsons/output/users-and-products.json"));
+
+        return userWithProductsWrapperDTO;
     }
-
-//    @Override
-//    public UserWithProductsWrapperDTO usersAndProducts() {
-//
-//        List<UserWithProductsDTO> collect =
-//                this.userRepository.findAllBySellingProductsBuyerIsNotNullOrderBySellingProductsBuyerFirstName()
-//                        .stream().map(user -> this.modelMapper.map(user, UserDTO.class))
-//                        .map(UserDTO::toUserWithProductsDTO).collect(Collectors.toList());
-//
-//        UserWithProductsWrapperDTO userWithProductsWrapperDTO =
-//                new UserWithProductsWrapperDTO(collect);
-//
-//        return userWithProductsWrapperDTO;
-//    }
-
 }

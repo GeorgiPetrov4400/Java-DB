@@ -20,4 +20,13 @@ public enum JsonOutput {
         fileWriter.flush();
         fileWriter.close();
     }
+
+    public static void writeToJson(Object object, Path filePath) throws IOException {
+        FileWriter fileWriter = new FileWriter(filePath.toFile());
+
+        gson.toJson(object, fileWriter);
+
+        fileWriter.flush();
+        fileWriter.close();
+    }
 }

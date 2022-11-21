@@ -6,6 +6,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
 @Configuration
 public class ConfigApplication {
 
@@ -14,11 +19,13 @@ public class ConfigApplication {
         return new ModelMapper();
     }
 
-    @Bean
-    public Gson gson() {
-        return new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
-                .setPrettyPrinting()
-                .create();
-    }
+//    @Bean
+//    public Gson gson() {
+//        return new GsonBuilder()
+//                .excludeFieldsWithoutExposeAnnotation()
+//                .setPrettyPrinting()
+//                .create();
+//    }
+
+
 }
