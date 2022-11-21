@@ -1,35 +1,40 @@
-package com.example.json.carDealer.entities;
+package com.example.json.carDealer.entities.dtos;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import java.time.LocalDateTime;
+import com.example.json.carDealer.entities.Sale;
+
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "customers")
-public class Customer extends BaseEntity {
+public class CustomerNameAndBirthdayDTO {
 
-    @Column(nullable = false)
+    private Long id;
+
     private String name;
 
-    @Column(name = "birth_date", nullable = false)
     private String birthDate;
 
-    @Column(name = "young_driver")
     private boolean youngDriver;
 
-    @OneToMany(targetEntity = Sale.class, mappedBy = "customer")
-    private List<Sale> sales;
+    private Sale[] sales;
 
-    public Customer() {
+    public CustomerNameAndBirthdayDTO() {
+        this.sales = new Sale[0];
     }
 
-    public Customer(String name, String birthDate, boolean youngDriver) {
+    public CustomerNameAndBirthdayDTO(Long id, String name, String birthDate, boolean youngDriver) {
+        this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.youngDriver = youngDriver;
+        this.sales = new Sale[0];
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -56,11 +61,11 @@ public class Customer extends BaseEntity {
         this.youngDriver = youngDriver;
     }
 
-    public List<Sale> getSales() {
+    public Sale[] getSales() {
         return sales;
     }
 
-    public void setSales(List<Sale> sales) {
-        this.sales = sales;
+    public void setSales(Sale[] sales) {
+        this.sales = new Sale[0];
     }
 }

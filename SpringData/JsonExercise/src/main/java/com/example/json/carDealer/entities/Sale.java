@@ -49,7 +49,7 @@ public class Sale extends BaseEntity {
     }
 
     public void setDiscount(Integer discount) {
-        if (customer.isIsYoungDriver()) {
+        if (customer.isYoungDriver()) {
             discount = discount + 5;
         }
         this.discount = discount;

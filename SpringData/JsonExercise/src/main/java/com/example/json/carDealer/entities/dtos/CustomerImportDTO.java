@@ -6,17 +6,17 @@ public class CustomerImportDTO {
 
     private String name;
 
-    private LocalDateTime birthDate;
+    private String birthDate;
 
-    private boolean isYoungDriver;
+    private boolean youngDriver;
 
     public CustomerImportDTO() {
     }
 
-    public CustomerImportDTO(String name, LocalDateTime birthDate, boolean isYoungDriver) {
+    public CustomerImportDTO(String name, String birthDate, boolean youngDriver) {
         this.name = name;
         this.birthDate = birthDate;
-        this.isYoungDriver = isYoungDriver;
+        this.youngDriver = youngDriver;
     }
 
     public String getName() {
@@ -27,19 +27,19 @@ public class CustomerImportDTO {
         this.name = name;
     }
 
-    public LocalDateTime getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(LocalDateTime birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
     public boolean isYoungDriver() {
-        return isYoungDriver;
+        return youngDriver;
     }
 
     public void setYoungDriver(boolean youngDriver) {
-        isYoungDriver = youngDriver;
+        this.youngDriver = youngDriver;
     }
 }
