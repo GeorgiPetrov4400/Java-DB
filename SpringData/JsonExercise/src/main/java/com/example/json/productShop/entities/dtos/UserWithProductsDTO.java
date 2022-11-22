@@ -1,5 +1,7 @@
 package com.example.json.productShop.entities.dtos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class UserWithProductsDTO {
@@ -10,6 +12,7 @@ public class UserWithProductsDTO {
 
     private Integer age;
 
+    @SerializedName("soldProducts")
     private ProductsSoldWithCountDTO products;
 
     public UserWithProductsDTO() {

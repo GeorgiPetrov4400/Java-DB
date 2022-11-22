@@ -37,10 +37,14 @@ public class ConsoleRunner implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        //  this.seedService.seedUsers();
+        // this.seedService.seedUsers();
         // this.seedService.seedCategories();
         // this.seedService.seedProducts();
 
+         queries();
+    }
+
+    private void queries() throws IOException {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter query number from homework: ");
 

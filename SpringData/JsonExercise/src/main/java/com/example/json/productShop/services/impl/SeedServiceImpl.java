@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -45,7 +46,7 @@ public class SeedServiceImpl implements SeedService {
     }
 
     @Override
-    public void seedUsers() throws FileNotFoundException {
+    public void seedUsers() throws IOException {
         FileReader fileReader = new FileReader(JSON_USERS_PATH);
         UserInputDTO[] userInputDTOS = this.gson.fromJson(fileReader, UserInputDTO[].class);
 
@@ -53,11 +54,12 @@ public class SeedServiceImpl implements SeedService {
                 .map(input -> this.modelMapper.map(input, User.class))
                 .collect(Collectors.toList());
 
+        fileReader.close();
         this.userRepository.saveAll(users);
     }
 
     @Override
-    public void seedProducts() throws FileNotFoundException {
+    public void seedProducts() throws IOException {
         FileReader fileReader = new FileReader(JSON_PRODUCTS_PATH);
         ProductInputDTO[] productInputDTOS = this.gson.fromJson(fileReader, ProductInputDTO[].class);
 
@@ -68,11 +70,12 @@ public class SeedServiceImpl implements SeedService {
                 .map(this::setRandomCategory)
                 .collect(Collectors.toList());
 
+        fileReader.close();
         this.productRepository.saveAll(products);
     }
 
     @Override
-    public void seedCategories() throws FileNotFoundException {
+    public void seedCategories() throws IOException {
         FileReader fileReader = new FileReader(JSON_CATEGORIES_PATH);
         CategoryInputDTO[] categoryInputDTOS = this.gson.fromJson(fileReader, CategoryInputDTO[].class);
 
@@ -80,6 +83,7 @@ public class SeedServiceImpl implements SeedService {
                 .map(input -> this.modelMapper.map(input, Category.class))
                 .collect(Collectors.toList());
 
+        fileReader.close();
         this.categoryRepository.saveAll(categories);
     }
 

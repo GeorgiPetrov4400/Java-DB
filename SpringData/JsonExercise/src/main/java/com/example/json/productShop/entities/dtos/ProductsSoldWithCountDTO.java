@@ -1,5 +1,7 @@
 package com.example.json.productShop.entities.dtos;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class ProductsSoldWithCountDTO {

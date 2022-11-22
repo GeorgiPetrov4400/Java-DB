@@ -46,13 +46,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserWithProductsWrapperDTO getUserWithSoldProductsOrderByCount() throws IOException {
 
-        List<UserWithProductsDTO> userWithProductsDTOList =
-                this.userRepository.findAllWithSoldProductsOrderByCount()
-                        .stream().map(user -> this.modelMapper.map(user, UserDTO.class))
-                        .map(UserDTO::toUserWithProductsDTO).collect(Collectors.toList());
+//        List<UserWithProductsDTO> userWithProductsDTOList =
+//                this.userRepository.findAllWithSoldProductsOrderByCount()
+//                        .stream().map(user -> this.modelMapper.map(user, UserDTO.class))
+//                        .map(UserDTO::toUserWithProductsDTO).collect(Collectors.toList());
+//
+//        UserWithProductsWrapperDTO userWithProductsWrapperDTO =
+//                new UserWithProductsWrapperDTO(userWithProductsDTOList);
+
+        List<UserWithProductsDTO> usersAndProducts =
+                this.userRepository.findAllBySellingProductsBuyerIsNotNullOrderBySellingProductsBuyerFirstName().stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .map(UserDTO::toUserWithProductsDTO).collect(Collectors.toList());
 
         UserWithProductsWrapperDTO userWithProductsWrapperDTO =
-                new UserWithProductsWrapperDTO(userWithProductsDTOList);
+                new UserWithProductsWrapperDTO(usersAndProducts);
 
         JsonOutput.writeToJson(userWithProductsWrapperDTO,
                 Path.of("src/main/resources/productShopJsons/output/users-and-products.json"));
