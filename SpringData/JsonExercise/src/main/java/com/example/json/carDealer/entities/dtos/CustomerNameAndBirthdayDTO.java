@@ -15,10 +15,11 @@ public class CustomerNameAndBirthdayDTO {
 
     private boolean youngDriver;
 
-    private Sale[] sales;
+    private List<Sale> sales;
 
     public CustomerNameAndBirthdayDTO() {
-        this.sales = new Sale[0];
+        //  this.sales = new Sale[0];
+        this.sales = new ArrayList<>(0);
     }
 
     public CustomerNameAndBirthdayDTO(Long id, String name, String birthDate, boolean youngDriver) {
@@ -26,7 +27,8 @@ public class CustomerNameAndBirthdayDTO {
         this.name = name;
         this.birthDate = birthDate;
         this.youngDriver = youngDriver;
-        this.sales = new Sale[0];
+        // this.sales = new Sale[0];
+        this.sales = new ArrayList<>(0);
     }
 
     public Long getId() {
@@ -61,11 +63,20 @@ public class CustomerNameAndBirthdayDTO {
         this.youngDriver = youngDriver;
     }
 
-    public Sale[] getSales() {
+//    public Sale[] getSales() {
+//        return sales;
+//    }
+//
+//    public void setSales(Sale[] sales) {
+//        this.sales = new Sale[0];
+//    }
+
+
+    public List<Sale> getSales() {
         return sales;
     }
 
-    public void setSales(Sale[] sales) {
-        this.sales = new Sale[0];
+    public void setSales(List<Sale> sales) {
+        this.sales = new ArrayList<>(0);
     }
 }

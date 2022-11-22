@@ -45,25 +45,26 @@ public class ConsoleRunner implements CommandLineRunner {
         // seedService.seedCustomers();
         // seedService.seedSales();
 
+        // Разкоментирай следващият ред за да импортнеш данните в базата
         //  seedService.seedAll();
 
 
-        // Query 1 – Ordered Customers
+        // Query 1 – Ordered Customers  // Разкоментирай следващият ред за да стартираш задачата
         // orderedCustomers_01();
 
-        // Query 2 – Cars from Make Toyota
+        // Query 2 – Cars from Make Toyota // Разкоментирай следващият ред за да стартираш задачата
         // carsFromMaker_02();
 
-        // Query 3 – Local Suppliers
+        // Query 3 – Local Suppliers  // Разкоментирай следващият ред за да стартираш задачата
         // localSuppliers_03();
 
-        // Query 4 – Cars with Their List of Parts
+        // Query 4 – Cars with Their List of Parts  // Разкоментирай следващият ред за да стартираш задачата
         // carsWithTheirParts_04();
 
-        // Query 5 – Total Sales by Customer
+        // Query 5 – Total Sales by Customer  // Разкоментирай следващият ред за да стартираш задачата
 
 
-        // Query 6 – Sales with Applied Discount
+        // Query 6 – Sales with Applied Discount  // Разкоментирай следващият ред за да стартираш задачата
 
 
     }
