@@ -8,7 +8,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,44 +39,17 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserWithProductsWrapperDTO getUserWithSoldProductsOrderByCount() {
 
-        List<UserDTO> users = this.userRepository
+        final List<UserWithProductsDTO> usersAndProducts = this.userRepository
                 .findAllBySellingProductsBuyerIsNotNullOrderBySellingProductsBuyerFirstName()
                 .stream()
-                .map(user -> modelMapper.map(user, UserDTO.class))
-                .toList();
+                .map(user -> this.modelMapper.map(user, UserDTO.class))
+                .map(UserDTO::toUserWithProductsDTO)
+                .collect(Collectors.toList());
 
-        users.
-                forEach(u -> u.getSoldProducts()
-                        .removeIf(p -> p.getBuyer() == null));
+        final UserWithProductsWrapperDTO usersWithProductsWrapperDTO =
+                new UserWithProductsWrapperDTO(usersAndProducts);
 
-
-        List<UserWithProductsDTO> usersWrapper =
-                users
-                        .stream()
-                        .map(UserDTO::userWithProductsDTO)
-                        .toList();
-
-        List<UserWithProductsDTO> sorted = usersWrapper
-                .stream()
-                .sorted(Comparator.comparing(UserWithProductsDTO::soldProductsCount)
-                        .reversed()
-                        .thenComparing(UserWithProductsDTO::getLastName))
-                .toList();
-
-        return new UserWithProductsWrapperDTO(sorted);
-
-
-
-//        List<UserWithProductsDTO> usersAndProducts =
-//                this.userRepository.findAllBySellingProductsBuyerIsNotNullOrderBySellingProductsBuyerFirstName().stream()
-//                        .map(user -> modelMapper.map(user, UserDTO.class))
-//                        .map(UserDTO::toUserWithProductsDTO).collect(Collectors.toList());
-//
-//        UserWithProductsWrapperDTO userWithProductsWrapperDTO =
-//                new UserWithProductsWrapperDTO(usersAndProducts);
-//
-//
-//        return userWithProductsWrapperDTO;
+        return usersWithProductsWrapperDTO;
     }
 }
 

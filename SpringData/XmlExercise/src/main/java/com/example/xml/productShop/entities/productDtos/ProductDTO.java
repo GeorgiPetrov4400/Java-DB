@@ -4,8 +4,8 @@ import com.example.xml.productShop.entities.categoryDtos.CategoryDTO;
 import com.example.xml.productShop.entities.userDtos.UserDTO;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ProductDTO {
     private String name;
@@ -15,7 +15,6 @@ public class ProductDTO {
     Set<CategoryDTO> categories;
 
     public ProductDTO() {
-        this.categories = new HashSet<>();
     }
 
     public ProductDTO(String name, BigDecimal price, UserDTO buyer, UserDTO seller, Set<CategoryDTO> categories) {
@@ -23,7 +22,7 @@ public class ProductDTO {
         this.price = price;
         this.buyer = buyer;
         this.seller = seller;
-       // this.categories = categories;
+        this.categories = categories;
     }
 
     public String getName() {
@@ -66,7 +65,14 @@ public class ProductDTO {
         this.categories = categories;
     }
 
-    public ProductBasicInfo productBasicInfo() {
-        return new ProductBasicInfo(name, price);
+    public static ProductsSoldWithCountDTO toProductsSoldWithCountDTO(Set<ProductDTO> sellingProducts) {
+        return new ProductsSoldWithCountDTO(sellingProducts
+                .stream()
+                .map(ProductDTO::toProductBasicInfo)
+                .collect(Collectors.toList()));
+    }
+
+    public static ProductBasicInfo toProductBasicInfo(ProductDTO productDTO) {
+        return new ProductBasicInfo(productDTO.getName(), productDTO.getPrice());
     }
 }

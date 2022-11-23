@@ -1,34 +1,32 @@
 package com.example.xml.productShop.entities.userDtos;
 
-import com.example.xml.productShop.entities.productDtos.ProductBasicInfo;
 import com.example.xml.productShop.entities.productDtos.ProductDTO;
-import com.example.xml.productShop.entities.productDtos.ProductsSoldWithCountDTO;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+
+import static com.example.xml.productShop.entities.productDtos.ProductDTO.toProductsSoldWithCountDTO;
 
 public class UserDTO {
 
     private String firstName;
     private String lastName;
     private Integer age;
-    private Set<UserDTO> friend;
-    private Set<ProductDTO> soldProducts;
+    private Set<ProductDTO> sellingProducts;
     private Set<ProductDTO> boughtProducts;
+    private Set<UserDTO> friend;
 
-    public String getFullName(){
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 
     public UserDTO() {
-        this.friend = new HashSet<>();
-        this.soldProducts = new HashSet<>();
+        this.sellingProducts = new HashSet<>();
         this.boughtProducts = new HashSet<>();
+        this.friend = new HashSet<>();
     }
 
-    public UserDTO(String firstName, String lastName, Integer age, Set<UserDTO> friend, Set<ProductDTO> soldProducts, Set<ProductDTO> bought) {
-        this();
+    public UserDTO(String firstName, String lastName, Integer age) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -66,12 +64,12 @@ public class UserDTO {
         this.friend = friend;
     }
 
-    public Set<ProductDTO> getSoldProducts() {
-        return soldProducts;
+    public Set<ProductDTO> getSellingProducts() {
+        return sellingProducts;
     }
 
-    public void setSoldProducts(Set<ProductDTO> soldProducts) {
-        this.soldProducts = soldProducts;
+    public void setSellingProducts(Set<ProductDTO> sellingProducts) {
+        this.sellingProducts = sellingProducts;
     }
 
     public Set<ProductDTO> getBoughtProducts() {
@@ -82,24 +80,8 @@ public class UserDTO {
         this.boughtProducts = boughtProducts;
     }
 
-    public UserWithProductsWrapperDTO usersCountWrapperDto(List<UserDTO> users){
-        List<UserWithProductsDTO> usersWrapper =
-                users
-                        .stream()
-                        .map(UserDTO::userWithProductsDTO)
-                        .toList();
-
-        return new UserWithProductsWrapperDTO(usersWrapper);
-    }
-
-    public UserWithProductsDTO userWithProductsDTO(){
-        List<ProductBasicInfo> products = soldProducts
-                .stream()
-                .map(ProductDTO::productBasicInfo)
-                .toList();
-
-        ProductsSoldWithCountDTO productsSoldWithCountDTO = new ProductsSoldWithCountDTO(products);
-
-        return new UserWithProductsDTO(firstName, lastName, age, productsSoldWithCountDTO);
+    public UserWithProductsDTO toUserWithProductsDTO() {
+        return new UserWithProductsDTO(firstName, lastName, age,
+                toProductsSoldWithCountDTO(sellingProducts));
     }
 }

@@ -53,16 +53,19 @@ public class ConsoleRunner implements CommandLineRunner {
         // categoriesByProductsCount_03();
 
         // Query 4 – Users and Products
-        UserWithProductsWrapperDTO userWithSoldProducts =
-                this.userService.getUserWithSoldProductsOrderByCount();
+        // usersAndProducts_04();
+
+
+    }
+
+    private void usersAndProducts_04() throws JAXBException {
+        UserWithProductsWrapperDTO usersAndProducts = this.userService.getUserWithSoldProductsOrderByCount();
 
         JAXBContext context = JAXBContext.newInstance(UserWithProductsWrapperDTO.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(userWithSoldProducts,
+        marshaller.marshal(usersAndProducts,
                 Path.of("src/main/resources/outputProductShop/users-and-products.xml").toFile());
-
-
     }
 
     private void categoriesByProductsCount_03() throws JAXBException {
