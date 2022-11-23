@@ -40,19 +40,21 @@ public class ConsoleRunner implements CommandLineRunner {
         // seedService.seedUsers();
         //  seedService.seedCategories();
         //  seedService.seedProducts();
+
+        // Разкоментирай следващият ред и напълни базата
         //  seedService.seedAll();
 
 
-        // Query 1 – Products in Range
+        // Query 1 – Products in Range  // Разкоментирай следващият ред и стартирай задачата
         // productsInRange_01();
 
-        // Query 2 – Successfully Sold Products
+        // Query 2 – Successfully Sold Products  // Разкоментирай следващият ред и стартирай задачата
         // successfullySoldProducts_02();
 
-        // Query 3 – Categories by Products Count
+        // Query 3 – Categories by Products Count  // Разкоментирай следващият ред и стартирай задачата
         // categoriesByProductsCount_03();
 
-        // Query 4 – Users and Products
+        // Query 4 – Users and Products  // Разкоментирай следващият ред и стартирай задачата
         // usersAndProducts_04();
 
 
