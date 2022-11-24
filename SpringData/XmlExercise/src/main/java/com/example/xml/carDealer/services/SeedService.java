@@ -1,20 +1,21 @@
 package com.example.xml.carDealer.services;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
 public interface SeedService {
 
-    void seedSuppliers() throws IOException;
+    void seedSuppliers() throws IOException, JAXBException;
 
-    void seedParts() throws IOException;
+    void seedParts() throws IOException, JAXBException;
 
-    void seedCars() throws IOException;
+    void seedCars() throws IOException, JAXBException;
 
-    void seedCustomers() throws IOException;
+    void seedCustomers() throws IOException, JAXBException;
 
     void seedSales();
 
-    default void seedAll() throws IOException {
+    default void seedAll() throws IOException, JAXBException {
         seedSuppliers();
         seedParts();
         seedCars();
