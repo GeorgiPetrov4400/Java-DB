@@ -11,14 +11,6 @@ import java.util.Set;
 public class CarWithPartsDTO {
 
     private CarAttributesDTO car;
-//    @XmlAttribute
-//    private String make;
-//
-//    @XmlAttribute
-//    private String model;
-//
-//    @XmlAttribute(name = "travelled-distance")
-//    private Long travelledDistance;
 
     @XmlElement
     private Set<PartNamePriceDTO> parts;

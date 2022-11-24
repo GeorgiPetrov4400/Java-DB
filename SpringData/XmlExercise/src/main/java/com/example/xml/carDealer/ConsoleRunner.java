@@ -3,11 +3,10 @@ package com.example.xml.carDealer;
 import com.example.xml.carDealer.entities.carDtos.CarsToyotaExportDTO;
 import com.example.xml.carDealer.entities.carDtos.CarsWithPartsExportDTO;
 import com.example.xml.carDealer.entities.customerDtos.CustomersExportDTO;
+import com.example.xml.carDealer.entities.customerDtos.CustomersTotalSalesExportDTO;
+import com.example.xml.carDealer.entities.saleDtos.SaleWithDiscountExportDTO;
 import com.example.xml.carDealer.entities.supplierDtos.SupplierNotAbroadExportDTO;
-import com.example.xml.carDealer.services.CarService;
-import com.example.xml.carDealer.services.CustomerService;
-import com.example.xml.carDealer.services.SeedService;
-import com.example.xml.carDealer.services.SupplierService;
+import com.example.xml.carDealer.services.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +14,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.nio.file.Path;
-import java.util.List;
 
 @Component
 public class ConsoleRunner implements CommandLineRunner {
@@ -23,12 +21,14 @@ public class ConsoleRunner implements CommandLineRunner {
     private final SeedService seedService;
     private final CustomerService customerService;
     private final CarService carService;
+    private final SaleService saleService;
     private final SupplierService supplierService;
 
-    public ConsoleRunner(SeedService seedService, CustomerService customerService, CarService carService, SupplierService supplierService) {
+    public ConsoleRunner(SeedService seedService, CustomerService customerService, CarService carService, SaleService saleService, SupplierService supplierService) {
         this.seedService = seedService;
         this.customerService = customerService;
         this.carService = carService;
+        this.saleService = saleService;
         this.supplierService = supplierService;
     }
 
@@ -55,6 +55,35 @@ public class ConsoleRunner implements CommandLineRunner {
 
         // Query 4 – Cars with Their List of Parts  //Разкоментирай следващия ред за да стартираш задачата
         // carsWithParts_04();
+
+        // Query 5 – Total Sales by Customer  //Разкоментирай следващия ред за да стартираш задачата
+        // totalSalesCustomer_05();
+
+        // Query 6 – Sales with Applied Discount  //Разкоментирай следващия ред за да стартираш задачата
+        // salesWithDiscount_06();
+    }
+
+    private void salesWithDiscount_06() throws JAXBException {
+        SaleWithDiscountExportDTO saleWithDiscountExportDTO = this.saleService.getAllSalesWithDiscount();
+
+        JAXBContext context = JAXBContext.newInstance(SaleWithDiscountExportDTO.class);
+        Marshaller marshaller = context.createMarshaller();
+
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.marshal(saleWithDiscountExportDTO,
+                Path.of("src", "main", "resources", "outputCarDealer", "sales-discounts.xml").toFile());
+    }
+
+    private void totalSalesCustomer_05() throws JAXBException {
+        CustomersTotalSalesExportDTO customersTotalSalesExportDTO =
+                this.customerService.getAllWithTotalSales();
+
+        JAXBContext context = JAXBContext.newInstance(CustomersTotalSalesExportDTO.class);
+        Marshaller marshaller = context.createMarshaller();
+
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.marshal(customersTotalSalesExportDTO,
+                Path.of("src", "main", "resources", "outputCarDealer", "customers-total-sales.xml").toFile());
     }
 
     private void carsWithParts_04() throws JAXBException {
