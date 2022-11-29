@@ -10,15 +10,12 @@ import javax.validation.constraints.Positive;
 public class Stat extends BaseEntity {
 
     @Column(nullable = false)
-    @Positive
     private float shooting;
 
     @Column(nullable = false)
-    @Positive
     private float passing;
 
     @Column(nullable = false)
-    @Positive
     private float endurance;
 
     public Stat() {
@@ -46,5 +43,10 @@ public class Stat extends BaseEntity {
 
     public void setEndurance(float endurance) {
         this.endurance = endurance;
+    }
+
+    @Override
+    public String toString() {
+        return passing + " - " + shooting + " - " + endurance;
     }
 }

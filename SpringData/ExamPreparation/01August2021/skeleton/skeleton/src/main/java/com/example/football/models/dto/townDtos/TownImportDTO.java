@@ -1,25 +1,17 @@
-package com.example.football.models.entity;
+package com.example.football.models.dto.townDtos;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
-@Entity
-@Table(name = "towns")
-public class Town extends BaseEntity {
-
-    @Column(nullable = false, unique = true)
+public class TownImportDTO {
+    @Size(min = 2)
     private String name;
-
-    @Column(nullable = false)
+    @Positive
     private Integer population;
-
-    @Column(name = "travel_guide", nullable = false, columnDefinition = "TEXT")
+    @Size(min = 10)
     private String travelGuide;
 
-    public Town() {
+    public TownImportDTO() {
     }
 
     public String getName() {
@@ -45,5 +37,4 @@ public class Town extends BaseEntity {
     public void setTravelGuide(String travelGuide) {
         this.travelGuide = travelGuide;
     }
-
 }

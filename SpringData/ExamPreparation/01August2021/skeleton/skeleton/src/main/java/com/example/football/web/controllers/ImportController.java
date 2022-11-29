@@ -1,12 +1,14 @@
 package com.example.football.web.controllers;
 
-import com.example.football.service.*;
+import com.example.football.service.PlayerService;
+import com.example.football.service.StatService;
+import com.example.football.service.TeamService;
+import com.example.football.service.TownService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
 
 import javax.xml.bind.JAXBException;
 import java.io.FileNotFoundException;
@@ -53,7 +55,7 @@ public class ImportController extends BaseController {
 
 
     @GetMapping("/stats")
-    public ModelAndView importStats() throws IOException {
+    public ModelAndView importStats() throws IOException, JAXBException {
         String fileContent = this.statService.readStatsFileContent();
         return super.view("xml/import-stats", "stats", fileContent);
     }

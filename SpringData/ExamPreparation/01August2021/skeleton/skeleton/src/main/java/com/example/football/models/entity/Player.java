@@ -1,21 +1,15 @@
 package com.example.football.models.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.validation.constraints.Min;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "players")
 public class Player extends BaseEntity {
-    
-    //•	email – accepts valid email addresses (must contains '@' and '.' – a dot).
-    // The values are unique in the database.
-    //•	birth date – a date in the "dd/MM/yyyy" format.
-    //•	position – one of the following – ATT, MID, DEF.
-    //o	Note: The players table has relations with the towns, teams and stats tables.
 
     @Column(name = "first_name", nullable = false)
     @Size(min = 3)
@@ -25,11 +19,24 @@ public class Player extends BaseEntity {
     @Size(min = 3)
     private String lastName;
 
+    @Column(nullable = false, unique = true)
+    @Email       //  @Pattern(regexp = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,63})$")
     private String email;
 
-    private Date birthDate;
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
 
+    @Column(name = "player_position", nullable = false)
     private PlayerPosition playerPosition;
+
+    @ManyToOne(optional = false)
+    private Town town;
+
+    @ManyToOne(optional = false)
+    private Team team;
+
+    @OneToOne
+    private Stat stat;
 
     public Player() {
     }
@@ -58,11 +65,11 @@ public class Player extends BaseEntity {
         this.email = email;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -72,5 +79,50 @@ public class Player extends BaseEntity {
 
     public void setPlayerPosition(PlayerPosition playerPosition) {
         this.playerPosition = playerPosition;
+    }
+
+    public Town getTown() {
+        return town;
+    }
+
+    public void setTown(Town town) {
+        this.town = town;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Stat getStat() {
+        return stat;
+    }
+
+    public void setStat(Stat stat) {
+        this.stat = stat;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return getId().equals(player.getId()) && Objects.equals(email, player.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), email);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Player - %s %s%n" +
+                "\tPosition - %s%n" +
+                "\tTeam - %s%n" +
+                "\tStadium - %s", firstName, lastName, playerPosition, team.getName(), team.getStadiumName());
     }
 }
