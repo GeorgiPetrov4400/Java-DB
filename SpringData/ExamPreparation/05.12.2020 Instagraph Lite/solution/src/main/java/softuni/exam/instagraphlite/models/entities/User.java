@@ -9,11 +9,9 @@ import javax.persistence.Table;
 @Table(name = "users")
 public class User extends BaseEntity {
 
-    // Must be between 2 and 18 (both numbers are INCLUSIVE)
     @Column(nullable = false, unique = true)
     private String username;
 
-    //Must be at least 4 characters long, inclusive.
     @Column(nullable = false)
     private String password;
 

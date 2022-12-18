@@ -11,7 +11,6 @@ public class Picture extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String path;
 
-    // Must be between 500 and 60000 (both numbers are INCLUSIVE)
     @Column(nullable = false)
     private Double size;
 

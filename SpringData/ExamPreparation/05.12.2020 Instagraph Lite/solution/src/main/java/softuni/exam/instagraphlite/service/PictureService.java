@@ -1,6 +1,10 @@
 package softuni.exam.instagraphlite.service;
 
+import softuni.exam.instagraphlite.models.dtos.pictureDtos.PicturePathNameDTO;
+import softuni.exam.instagraphlite.models.entities.Picture;
+
 import java.io.IOException;
+import java.util.Optional;
 
 public interface PictureService {
     boolean areImported();
@@ -8,4 +12,5 @@ public interface PictureService {
     String importPictures() throws IOException;
     String exportPictures();
 
+    Optional<Picture> findPictureByPath(PicturePathNameDTO path);
 }
